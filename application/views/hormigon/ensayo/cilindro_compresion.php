@@ -15,7 +15,6 @@ alturah2 =document.form1.altura_h2.value;
       ResistenciaCilindricaMPA=((((parseFloat(carga)*1000))/(aerea*100)));
       ResistenciaCilindricaKGc2=ResistenciaCilindricaMPA.toFixed(1)*10;
 
-    
 
       if( ResistenciaCilindricaMPA.toFixed(1) >= 20 ) {
          
@@ -27,13 +26,11 @@ alturah2 =document.form1.altura_h2.value;
         }
         
         ResistenciaCubicaKGc2=ResistenciaCubicaMPA.toFixed(1)*10;
-
          document.form1.resistencia_cubica.value = parseInt(ResistenciaCubicaKGc2);//kgc2
          document.form1.resistencia_mpa.value = ResistenciaCubicaMPA.toFixed(1);
          document.form1.aerea.value = aerea.toFixed(2);
          document.form1.volumen.value = parseInt(volumen);
          document.form1.densidad.value = densidad.toFixed(3);
-
          document.form1.ResistenciaCilindricaMPA.value = ResistenciaCilindricaMPA.toFixed(1);
          document.form1.ResistenciaCilindricaKGc2.value = ResistenciaCilindricaKGc2.toFixed(0);      
    }
