@@ -1,32 +1,55 @@
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-11 pt-3">
-          <h2>Muestras de Prefabricados</h2>
-        <table class="table table-sm">
-			  <thead>
+ <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i> Muestras de Prefabricados     <a href="<?php echo base_url();?>Prefabricado\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
+          <p>Listado de Muestras</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item"><a href="#">Actividades</a></li>
+        </ul>
+      </div>
+        <!-- Buttons-->
+            <?php if($mensaje!= FALSE){ ?>
+                <div class="row">
+                <div class="col-md-12">
+                  <div class="bs-component">
+                    <div class="alert alert-dismissible alert-<?php echo $mensaje['class']; ?>">
+                      <button class="close" type="button" data-dismiss="alert">×</button><strong><?php echo $mensaje['strong']; ?>!</strong> <?php echo $mensaje['mensaje']; ?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php } ?>   
+            <div class="row">
+              <div class="col-md-12">
+                <div class="tile">
+
+          
+          
+       <table id="dataTables" class="table table-sm table-striped">
+        	  <thead>
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">First Name</th>
-			      <th scope="col">Last Name</th>
-			      <th scope="col">Username</th>
+			      <th scope="col">Fecha Muestra</th>
+			      <th scope="col">Número Muestra</th>
+			       <th scope="col">Cliente</th>
+			       <th scope="col">Obra</th>
+			      <th scope="col">Ficha</th> 
+			      <th scope="col">Editar</th>
+			      <th scope="col">Eliminar</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			      <td>Thornton</td>
-			      <td>@fat</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td colspan="2">Larry the Bird</td>
-			      <td>@twitter</td>
-			    </tr>
+			  	
 			  </tbody>
+			
 			</table>
-        </main>
+  
+
+    
+          </div>
+        </div>
+      </div>
+    </main>
+
