@@ -44,7 +44,9 @@ class Cemento extends CI_Controller {
 
 		$this->load->view('header',$data);
 		$this->load->view('administracion\cemento\listado',$data);
+		$this->load->view('essential_js');
 		$this->load->view('footer');
+
 	}
 	public function nuevo()
 	{
@@ -56,12 +58,13 @@ class Cemento extends CI_Controller {
 		$data['selected']="Administración";
 		$data['link_selected']="Nuevo";
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('cem_nombre', 'Nombre', 'required|is_unique[cementos.cem_nombre]');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('header',$data);
 			$this->load->view('administracion\cemento\nuevo',$data);
+			$this->load->view('essential_js');
 			$this->load->view('footer');
 		}
 		else
@@ -86,13 +89,14 @@ class Cemento extends CI_Controller {
 		$data['id']=$id;
 
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('cem_nombre', 'Nombre', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
 			$data['cemento']=$this->cemento_model->get_cemento($id);	
 			$this->load->view('header',$data);
 			$this->load->view('administracion\cemento\editar',$data);
+			$this->load->view('essential_js');
 			$this->load->view('footer');
 		}
 		else
@@ -102,26 +106,18 @@ class Cemento extends CI_Controller {
 			 	redirect(base_url().'/cemento/listar/success', 'location');	
 		else
 			 	redirect(base_url().'/cemento/listar/error', 'location');
-
-
-	
 		}
 	}
-
-
-
 	public function eliminar($id)
 	{
 		$this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->helper('url_helper');
 		$this->load->model('cemento_model');
-
 		$data['selected']="Administración";
 		$data['link_selected']="Listado";
 		$data['id']=$id;
-
-
+		
 		if($this->cemento_model->del_cemento($id))
 			 	redirect(base_url().'/cemento/listar/success', 'location');	
 		else

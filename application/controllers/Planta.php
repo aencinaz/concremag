@@ -43,6 +43,8 @@ class Planta extends CI_Controller {
   		
 		$this->load->view('header',$data);
 		$this->load->view('administracion\planta\listado',$data);
+		$this->load->view('essential_js');
+		
 		$this->load->view('footer');
 	}
 	public function nuevo()
@@ -55,12 +57,14 @@ class Planta extends CI_Controller {
 		$data['selected']="Administración";
 		$data['link_selected']="Nuevo";
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('pla_nombre', 'Nombre', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('header',$data);
 			$this->load->view('administracion\planta\nuevo',$data);
+			$this->load->view('essential_js');
+		
 			$this->load->view('footer');
 		}
 		else
@@ -85,13 +89,15 @@ class Planta extends CI_Controller {
 		$data['id']=$id;
 
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('pla_nombre', 'Nombre', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
 			$data['planta']=$this->planta_model->get_planta($id);	
 			$this->load->view('header',$data);
 			$this->load->view('administracion\planta\editar',$data);
+			$this->load->view('essential_js');
+		
 			$this->load->view('footer');
 		}
 		else

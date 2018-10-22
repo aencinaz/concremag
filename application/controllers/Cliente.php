@@ -23,8 +23,8 @@ class Cliente extends CI_Controller {
 		$data = array();
 		foreach ($list as $obra) {	
 			$row = array();	
-			$row[] = $obra['nombre'];
-			$row[] = $obra['id_obra'];
+			$row[] = $obra['obr_nombre'];
+			$row[] = $obra['obr_id'];
 			$data[] =$row;
 		}
 		//output to json format
@@ -61,6 +61,7 @@ class Cliente extends CI_Controller {
 		$this->load->view('header',$data);
 		$this->load->view('administracion\cliente\listado',$data);
 		$this->load->view('essential_js');
+		$this->load->view('specific_datatables_js');
 		$this->load->view('footer');
 	}
 	public function nuevo()
@@ -73,8 +74,8 @@ class Cliente extends CI_Controller {
 		$data['selected']="Administración";
 		$data['link_selected']="Nuevo";
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-		$this->form_validation->set_rules('rut', 'Rut', 'required');
+		$this->form_validation->set_rules('cli_nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('cli_rut', 'Rut', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -105,8 +106,8 @@ class Cliente extends CI_Controller {
 		$data['id']=$id;
 
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-		$this->form_validation->set_rules('rut', 'Rut', 'required');
+		$this->form_validation->set_rules('cli_nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('cli_rut', 'Rut', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{

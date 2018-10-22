@@ -9,33 +9,33 @@ class planta_model extends CI_Model {
 		if ($id === FALSE)
 		{
 			$this->db->select('*');
-			$this->db->from('plantas');
-			$this->db->order_by("nombre", "asc"); 
+			$this->db->from('PLANTAS');
+			$this->db->order_by("pla_nombre", "asc"); 
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		$query = $this->db->get_where('plantas', array('id_planta' => $id));
+		$query = $this->db->get_where('PLANTAS', array('pla_id' => $id));
 		return $query->row_array();
 	}
 	public function set_planta()
 	{
-		$data = array('nombre' => $this->input->post('nombre'),
+		$data = array('pla_nombre' => $this->input->post('pla_nombre'),
 			);
-		return $this->db->insert('plantas', $data);
+		return $this->db->insert('PLANTAS', $data);
 	}	
 	public function edit_planta($id)
 	{
-		$data = array('nombre' => $this->input->post('nombre'),
+		$data = array('pla_nombre' => $this->input->post('pla_nombre'),
 			);
-			$this->db->where('id_planta', $id);
-		return $this->db->update('plantas', $data);
+			$this->db->where('pla_id', $id);
+		return $this->db->update('PLANTAS', $data);
 	}
 
 
 	public function del_planta($id)
 	{
-		$this->db->where('id_planta', $id);
-		return $this->db->delete('plantas');
+		$this->db->where('pla_id', $id);
+		return $this->db->delete('PLANTAS');
 	}
 }
 

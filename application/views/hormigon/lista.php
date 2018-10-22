@@ -1,7 +1,7 @@
- <main class="app-content">
+   <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Muestras de Hormigón     <a href="<?php echo base_url();?>muestrahormigon\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
+          <h1><i class="fa fa-th-list"></i> Muestras de Hormigón     <a href="<?php echo base_url();?>muestra\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
           <p>Listado de Muestras</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -33,7 +33,8 @@
 			      <th scope="col">#</th>
 			      <th scope="col">Fecha Muestra</th>
 			      <th scope="col">Número Muestra</th>
-			       <th scope="col">Cliente</th>
+			       <th scope="col">Elemento</th>
+             <th scope="col">Cliente</th>
 			       <th scope="col">Obra</th>
 			      <th scope="col">Ficha</th> 
 			      <th scope="col">Editar</th>

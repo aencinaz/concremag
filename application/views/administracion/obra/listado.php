@@ -33,7 +33,6 @@
 			      <th scope="col">Nombre</th>
 			      <th scope="col">Ubicación</th>
 			   	   <th scope="col">Cliente</th>
-			  
 			      <th scope="col"></th>
 			      <th scope="col"></th>
 			    </tr>
@@ -42,11 +41,11 @@
 			  	<?php $i=1; foreach ($obra as $obra_item): ?>
 			    <tr>
 			      <th scope="row"><?php echo $i; ?></th>
-			      <td><?php echo $obra_item['nombre']; ?></td>
-			      <td><?php echo $obra_item['ubicacion']; ?></td>
-			       <td><?php echo $obra_item['nombre_cliente']; ?></td>
-			      <td><a href="<?php echo base_url().'obra/editar/'.$obra_item['id_obra']; ?>">Editar</a></td>
-			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'obra/eliminar/'.$obra_item['id_obra']; ?>">Eliminar</a></td>
+			      <td><?php echo $obra_item['obr_nombre']; ?></td>
+			      <td><?php echo $obra_item['obr_ubicacion']; ?></td>
+			       <td><?php echo $obra_item['cli_nombre']; ?></td>
+			      <td><a href="<?php echo base_url().'obra/editar/'.$obra_item['obr_id']; ?>">Editar</a></td>
+			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'obra/eliminar/'.$obra_item['obr_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>
 			  </tbody>

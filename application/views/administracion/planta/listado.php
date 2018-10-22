@@ -40,9 +40,9 @@
 			  	<?php $i=1; foreach ($planta as $planta_item): ?>
 			    <tr>
 			      <th scope="row"><?php echo $i; ?></th>
-			      <td><?php echo $planta_item['nombre']; ?></td>
-			      <td><a href="<?php echo base_url().'planta/editar/'.$planta_item['id_planta']; ?>">Editar</a></td>
-			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'planta/eliminar/'.$planta_item['id_planta']; ?>">Eliminar</a></td>
+			      <td><?php echo $planta_item['pla_nombre']; ?></td>
+			      <td><a href="<?php echo base_url().'planta/editar/'.$planta_item['pla_id']; ?>">Editar</a></td>
+			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'planta/eliminar/'.$planta_item['pla_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>
 			  </tbody>

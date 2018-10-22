@@ -1,12 +1,12 @@
  <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Hormigon     <a href="<?php echo base_url();?>hormigon\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
+          <h1><i class="fa fa-th-list"></i> Hormigón     <a href="<?php echo base_url();?>hormigon\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
           <p>Listado de Hormigones</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Hormigon</a></li>
+          <li class="breadcrumb-item"><a href="#">Hormigón</a></li>
         </ul>
       </div>
         <!-- Buttons-->
@@ -41,10 +41,10 @@
 			  	<?php $i=1; foreach ($hormigon as $hormigon_item): ?>
 			    <tr>
 			      <th scope="row"><?php echo $i; ?></th>
-			      <td><?php echo $hormigon_item['nombre']; ?></td>
-			      <td><?php echo $hormigon_item['descripcion']; ?></td>
-			      <td><a href="<?php echo base_url().'hormigon/editar/'.$hormigon_item['id_hormigon']; ?>">Editar</a></td>
-			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'hormigon/eliminar/'.$hormigon_item['id_hormigon']; ?>">Eliminar</a></td>
+			      <td><?php echo $hormigon_item['hor_nombre']; ?></td>
+			      <td><?php echo $hormigon_item['hor_descripcion']; ?></td>
+			      <td><a href="<?php echo base_url().'hormigon/editar/'.$hormigon_item['hor_id']; ?>">Editar</a></td>
+			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'hormigon/eliminar/'.$hormigon_item['hor_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>
 			  </tbody>

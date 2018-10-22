@@ -1,4 +1,4 @@
-<?php echo form_open(base_url()."muestrahormigon/nuevo") ?> 
+<?php echo form_open(base_url()."muestra/nuevo") ?> 
  <main class="app-content">
       <div class="app-title">
         <div>
@@ -34,10 +34,10 @@
      <div class="form-group row">
           <label for="example-url-input" class="col-sm-2  col-form-label-sm col-form-label-sm-sm">Cliente</label>
           <div class="col-sm-10">
-           <select name="id_cliente" id="primary" class="form-control form-control-sm" >
+           <select name="cli_id" id="primary" class="form-control form-control-sm" >
               <option value=""></option>
                 <?php foreach ($clientes as $cliente_item): ?>
-              <option value="<?php echo $cliente_item['id_cliente']; ?>" <?php echo set_select('id_cliente',$cliente_item['id_cliente']); ?> ><?php echo $cliente_item['nombre']; ?></option>
+              <option value="<?php echo $cliente_item['cli_id']; ?>" <?php echo set_select('cli_id',$cliente_item['cli_id']); ?> ><?php echo $cliente_item['cli_nombre']; ?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -48,7 +48,7 @@
       <div class="form-group row">
           <label for="example-url-input" class="col-sm-2 col-form-label-sm col-form-label-sm-sm">Obra</label>
           <div class="col-sm-10">
-           <select name="id_obra" id="secondary" class="form-control form-control-sm" >
+           <select name="obr_id" id="secondary" class="form-control form-control-sm" >
             </select>
           </div>
         </div>
@@ -130,8 +130,12 @@
         <div class="form-group row">
           <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Aditivos</label>
           <div class="col-sm-6">
-            <input name="aditivos" autocomplete="off" value="<?php echo set_value('aditivos'); ?>"  class="form-control form-control-sm" type="text" >
-          </div>
+           <select name="hormigon_grado" class="form-control form-control-sm" >
+                    <?php foreach ($aditivos as $aditivos_item): ?>
+                  <option value="<?php echo $aditivos_item['adi_id']; ?>"><?php echo $aditivos_item['adi_nombre']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+            </div>
         </div>
     
             <div class="form-group row">
@@ -139,7 +143,8 @@
               <div class="col-sm-6">
                <select name="hormigon_grado" class="form-control form-control-sm" >
                     <?php foreach ($hormigones as $hormigon_item): ?>
-                  <option value="<?php echo $hormigon_item['id_hormigon']; ?>"><?php echo $hormigon_item['nombre']; ?></option>
+                  <option value=""></option>
+                  <option value="<?php echo $hormigon_item['hor_id']; ?>"><?php echo $hormigon_item['hor_nombre']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -149,6 +154,8 @@
               <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Compactación</label>
               <div class="col-sm-6">
                 <select name="compactacion" class="form-control form-control-sm">
+                       <option value=""></option>
+             
                   <option value="1" <?php echo set_select('compactacion',1); ?>  >Mecánica</option>
                   <option value="2" <?php echo set_select('compactacion',2); ?>  >Manual</option>
                 </select>
@@ -159,6 +166,8 @@
               <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Tipo de Camión</label>
               <div class="col-sm-6">
                  <select name="camion" class="form-control form-control-sm" >
+                       <option value=""></option>
+             
                   <option value="1" <?php echo set_select('camion',1); ?>  >Betonero</option>
                   <option value="2" <?php echo set_select('camion',2); ?>  >Mixer</option>
                   <option value="3" <?php echo set_select('camion',3); ?>  >Tolva</option>
@@ -170,9 +179,10 @@
             <div class="form-group row">
               <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Panta</label>
               <div class="col-sm-6">
-                <select name="id_planta" class="form-control form-control-sm" >
+                <select name="pla_id" class="form-control form-control-sm" >
                     <?php foreach ($plantas as $planta_item): ?>
-                  <option value="<?php echo $planta_item['id_planta']; ?>" <?php echo set_select('id_planta',$planta_item['id_planta']); ?>  ><?php echo $planta_item['nombre']; ?></option>
+                           <option value=""></option>
+                  <option value="<?php echo $planta_item['pla_id']; ?>" <?php echo set_select('pla_id',$planta_item['pla_id']); ?>  ><?php echo $planta_item['pla_nombre']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -181,9 +191,11 @@
             <div class="form-group row">
               <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Cemento</label>
               <div class="col-sm-6">
-                 <select name="id_cemento" class="form-control form-control-sm" >
+                 <select name="cem_id" class="form-control form-control-sm" >
                     <?php foreach ($cementos as $cemento_item): ?>
-                  <option value="<?php echo $cemento_item['id_cemento']; ?>" <?php echo set_select('id_cemento',$cemento_item['id_cemento']); ?>  ><?php echo $cemento_item['nombre']; ?></option>
+                           <option value=""></option>
+
+                  <option value="<?php echo $cemento_item['cem_id']; ?>" <?php echo set_select('cem_id',$cemento_item['cem_id']); ?>  ><?php echo $cemento_item['cem_nombre']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>

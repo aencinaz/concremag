@@ -20,8 +20,8 @@
            
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text" value="<?php echo $obra['nombre']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="obr_nombre" type="text" value="<?php echo $obra['obr_nombre']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('obr_nombre'); ?> </div>
                  
                 </div>
 
@@ -29,8 +29,8 @@
                
                  <div class="form-group">
                   <label class="control-label">Ubicación</label>
-                  <input class="form-control" autocomplete="off" name="ubicacion" type="text" value="<?php echo $obra['ubicacion']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('ubicacion'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="obr_ubicacion" type="text" value="<?php echo $obra['obr_ubicacion']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('obr_ubicacion'); ?> </div>
                  
                 </div>
   

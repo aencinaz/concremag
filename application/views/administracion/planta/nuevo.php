@@ -22,8 +22,8 @@
 
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text">
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="pla_nombre" type="text">
+                  <div class="form-control-feedback"> <?php echo form_error('pla_nombre'); ?> </div>
                 </div>
 
               

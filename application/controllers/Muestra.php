@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Prefabricado extends CI_Controller {
+class Muestra extends CI_Controller {
 	public function index()
 	{
 		$this->load->helper('url');
-		$data['selected']="prefabricado";
-		$data['link_selected']="prefabricado";
+		$data['selected']="Hormigón";
+		$data['link_selected']="";
 
 		$this->load->view('header',$data);
-		$this->load->view('prefabricado\links');
+		$this->load->view('hormigon\links');
 		$this->load->view('main');
 		$this->load->view('footer');
 	}
@@ -33,14 +33,13 @@ class Prefabricado extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('muestra_model');
 		
-		$data['selected']="prefabricado";
+		$data['selected']="Hormigón";
 		$data['link_selected']="Listado";
 		$data['muestras']=$this->muestra_model->get_muestra();	
 		$this->load->view('header',$data);
-		$this->load->view('prefabricado\lista');
+		$this->load->view('hormigon\lista');
 		$this->load->view('essential_js');
-		$this->load->view('prefabricado\specific_datatables_js');
-
+		$this->load->view('specific_datatables_js');
 		$this->load->view('footer');
 	}
 
@@ -53,13 +52,13 @@ class Prefabricado extends CI_Controller {
 		$this->load->model('ensayo_model');
 		
 		
-		$data['selected']="prefabricado";
-		$data['link_selected']="prefabricado";
+		$data['selected']="Hormigón";
+		$data['link_selected']="Listado";
 		$data['muestra']=$this->muestra_model->get_muestra($id);	
 		$data['ensayos']=$this->ensayo_model->get_ensayo_muestra($id);	
 		$data['pestana']=$muestra;
 		$this->load->view('header',$data);
-		$this->load->view('prefabricado\ficha',$data);
+		$this->load->view('hormigon\ficha',$data);
 		$this->load->view('essential_js');
 		$this->load->view('footer');
 	}
@@ -77,28 +76,29 @@ class Prefabricado extends CI_Controller {
 		$this->load->model('ensayo_model');
 		$this->load->model('muestra_model');
 
-		$data['selected']="prefabricado";
-		$data['link_selected']="prefabricado";
+		$data['selected']="Hormigón";
+		$data['link_selected']="Listado";
 		$data['ensayo']=$this->ensayo_model->get_ensayo($id);	
-		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['id_muestra']);	
+		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['mue_id']);	
 		
-		$this->form_validation->set_rules('resistencia_mpa', 'resistencia_mpa', 'required');				
+		$this->form_validation->set_rules('ens_resistencia_mpa', 'resistencia_mpa', 'required');	
+
 		if ($this->form_validation->run() == FALSE)
 		{
 
 						$this->load->view('header',$data);
-						switch ( $data['ensayo']['tipo_probeta']) {
+						switch ( $data['ensayo']['ens_tipo_probeta']) {
 							case 'Cilindro':
 								if($data['ensayo']['ensaye']=='Compresión')
-										$this->load->view('prefabricado\ensayo\cilindro_compresion',$data);
+										$this->load->view('hormigon\ensayo\cilindro_compresion',$data);
 								else
-										$this->load->view('prefabricado\ensayo\cilindro_hendimiento',$data);
+										$this->load->view('hormigon\ensayo\cilindro_hendimiento',$data);
 								break;
 							case 'Cubo':
-										$this->load->view('prefabricado\ensayo\cubo_compresion',$data);		
+										$this->load->view('hormigon\ensayo\cubo_compresion',$data);		
 								break;
 							case 'Prisma':
-								$this->load->view('prefabricado\ensayo\prisma_flexotraccion',$data);
+								$this->load->view('hormigon\ensayo\prisma_flexotraccion',$data);
 							break;
 						}
 						$this->load->view('essential_js');
@@ -107,9 +107,9 @@ class Prefabricado extends CI_Controller {
 		else
 		{
 				if($this->ensayo_model->edit_ensayo($id))
-			 	redirect(base_url()."prefabricado/ficha/".$data['ensayo']['id_muestra']."/ensayo/success", 'location');	
+			 	redirect(base_url()."muestrahormigon/ficha/".$data['ensayo']['mue_id']."/ensayo/success", 'location');	
 		else
-			 	redirect(base_url()."prefabricado/ficha/".$data['ensayo']['id_muestra']."/ensayo/error", 'location');
+			 	redirect(base_url()."muestrahormigon/ficha/".$data['ensayo']['mue_id']."/ensayo/error", 'location');
 		}
 
 
@@ -129,11 +129,10 @@ class Prefabricado extends CI_Controller {
 		$this->load->model('muestra_model');
 		$data['id']=$id;
 		$data['selected']="Hormigón";
-		$data['link_selected']="prefabricado";
+		$data['link_selected']="Listado";
 		$data['muestra']=$this->muestra_model->get_muestra($id);	
-		$$data['selected']="prefabricado";
 		$this->load->view('header',$data);
-		$this->load->view('prefabricado\editar',$data);
+		$this->load->view('hormigon\editar',$data);
 		$this->load->view('essential_js');
 		$this->load->view('footer');
 	}
@@ -159,25 +158,25 @@ class Prefabricado extends CI_Controller {
 		$data['plantas']=$this->planta_model->get_planta();	
 		$data['cementos']=$this->cemento_model->get_cemento();	
 		
-		$data['selected']="prefabricado";
-		$data['link_selected']="prefabricado";
+		$data['selected']="Hormigón";
+		$data['link_selected']="Nuevo";
 
 		$this->form_validation->set_rules('num_muestra', 'Numero de Muestra', 'required');
 		$this->form_validation->set_rules('fecha_muestreo', 'fecha de Muestra', 'required');
-		$this->form_validation->set_rules('id_obra', 'Obra', 'required');
-		$this->form_validation->set_rules('id_cliente', 'Cliente', 'required');
+		$this->form_validation->set_rules('obr_id', 'Obra', 'required');
+		$this->form_validation->set_rules('cli_id', 'Cliente', 'required');
 		
 		$this->form_validation->set_rules('compactacion', 'Compactación', 'required');
 		$this->form_validation->set_rules('camion', 'camión', 'required');
-		$this->form_validation->set_rules('id_planta', 'Planta', 'required');
-		$this->form_validation->set_rules('id_cemento', 'Cemento', 'required');
+		$this->form_validation->set_rules('pla_id', 'Planta', 'required');
+		$this->form_validation->set_rules('cem_id', 'Cemento', 'required');
 				
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('header',$data);
-			$this->load->view('prefabricado\nuevo',$data);
+			$this->load->view('hormigon\nuevo',$data);
 			$this->load->view('essential_js');
-			$this->load->view('prefabricado\specific_js');
+			$this->load->view('hormigon\specific_js');
 			$this->load->view('footer');
 		}
 		else
@@ -223,11 +222,11 @@ class Prefabricado extends CI_Controller {
 
 				
 			}
-			 	redirect(base_url().'/prefabricados/listar/success', 'location');	
+			 	redirect(base_url().'/muestrahormigon/listar/success', 'location');	
 
 			}
 			else
-			 	redirect(base_url().'/prefabricados/listar/error', 'location');
+			 	redirect(base_url().'/muestrahormigon/listar/error', 'location');
 		}
 	}
 
@@ -244,13 +243,14 @@ class Prefabricado extends CI_Controller {
 			$no++;
 			$row = array();
 			$row[] = $no;
-			$row[] = date("d-m-Y",strtotime($hormigon->fecha_muestreo)) ;
-			$row[] = $hormigon->num_muestra;
-			$row[] = $hormigon->nombre_cliente;
-			$row[] = $hormigon->nombre_obra;
-			$row[] = '<a href="'. base_url()."prefabricado/ficha/".$hormigon->id_muestra.'/muestra">Ficha</a>';
-			$row[] = '<a href="'. base_url()."prefabricado/editar/".$hormigon->id_muestra.'">editar</a>';
-			$row[] = '<a onclick="return confirmar()" href="'. base_url()."prefabricado/eliminar/".$hormigon->id_muestra.'">Eliminar</a>';
+			$row[] = date("d-m-Y",strtotime($hormigon->mue_fecha_muestreo)) ;
+			$row[] = $hormigon->mue_n_muestra;
+			$row[] = $hormigon->mue_elemento;
+			$row[] = $hormigon->cli_nombre;
+			$row[] = $hormigon->obr_nombre;
+			$row[] = '<a href="'. base_url()."muestra/ficha/".$hormigon->mue_id.'/muestra">Ficha</a>';
+			$row[] = '<a href="'. base_url()."muestra/editar/".$hormigon->mue_id.'">editar</a>';
+			$row[] = '<a onclick="return confirmar()" href="'. base_url()."muestrahormigon/eliminar/".$hormigon->mue_id.'">Eliminar</a>';
 			$data[] = $row;
 		}
 
@@ -271,14 +271,14 @@ class Prefabricado extends CI_Controller {
 		$this->load->helper('url_helper');
 		$this->load->model('muestra_model');
 
-		$data['selected']="prefabricado";
-		$data['link_selected']="prefabricado";
+		$data['selected']="Administración";
+		$data['link_selected']="Listado";
 		$data['id']=$id;
 
 		if($this->muestra_model->del_muestra($id))
-			 	redirect(base_url().'/prefabricado/listar/success', 'location');	
+			 	redirect(base_url().'/muestrahormigon/listar/success', 'location');	
 		else
-			 	redirect(base_url().'/prefabricado/listar/error', 'location');
+			 	redirect(base_url().'/muestrahormigon/listar/error', 'location');
 
 	}
 

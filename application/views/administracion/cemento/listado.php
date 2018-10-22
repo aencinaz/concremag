@@ -40,10 +40,10 @@
 			  	<?php $i=1; foreach ($cementos as $cemento_item): ?>
 			    <tr>
 			      <th scope="row"><?php echo $i; ?></th>
-			      <td><?php echo $cemento_item['nombre']; ?></td>
-			      <td><?php echo $cemento_item['descripcion']; ?></td>
-			      <td><a href="<?php echo base_url().'cemento/editar/'.$cemento_item['id_cemento']; ?>">Editar</a></td>
-			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'cemento/eliminar/'.$cemento_item['id_cemento']; ?>">Eliminar</a></td>
+			      <td><?php echo $cemento_item['cem_nombre']; ?></td>
+			      <td><?php echo $cemento_item['cem_descripcion']; ?></td>
+			      <td><a href="<?php echo base_url().'cemento/editar/'.$cemento_item['cem_id']; ?>">Editar</a></td>
+			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'cemento/eliminar/'.$cemento_item['cem_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>
 			  </tbody>

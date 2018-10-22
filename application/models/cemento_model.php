@@ -10,34 +10,31 @@ class cemento_model extends CI_Model {
 		{
 			$this->db->select('*');
 			$this->db->from('cementos');
-			$this->db->order_by("nombre", "asc"); 
+			$this->db->order_by("cem_nombre", "asc"); 
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		$query = $this->db->get_where('cementos', array('id_cemento' => $id));
+		$query = $this->db->get_where('cementos', array('cem_id' => $id));
 		return $query->row_array();
 	}
 	public function set_cemento()
 	{
-		$data = array('nombre' => $this->input->post('nombre'),
-				'descripcion' => $this->input->post('descripcion')	
+		$data = array('cem_nombre' => $this->input->post('cem_nombre'),
+				'cem_descripcion' => $this->input->post('cem_descripcion')	
 			);
 		return $this->db->insert('cementos', $data);
 	}	
 	public function edit_cemento($id)
 	{
-		$data = array('nombre' => $this->input->post('nombre'),
-				'descripcion' => $this->input->post('descripcion')		
+		$data = array('cem_nombre' => $this->input->post('cem_nombre'),
+				'cem_descripcion' => $this->input->post('cem_descripcion')		
 			);
-			$this->db->where('id_cemento', $id);
+			$this->db->where('cem_id', $id);
 		return $this->db->update('cementos', $data);
 	}
-
-
 	public function del_cemento($id)
 	{
-		$this->db->where('id_cemento', $id);
+		$this->db->where('cem_id', $id);
 		return $this->db->delete('cementos');
 	}
 }
-

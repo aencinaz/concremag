@@ -1,10 +1,10 @@
 <?php
 class muestra_model extends CI_Model {
 
-	var $table = 'muestras';
-	var $column_order = array(null, 'fecha_muestreo','num_muestra','nombre_obra','nombre_cliente'); //set column field database for datatable orderable
-	var $column_search = array('num_muestra','fecha_muestreo','obras.nombre','clientes.nombre'); //set column field database for datatable searchable 
-	var $order = array('fecha_muestreo' => 'desc'); // default order 
+	var $table = 'MUESTRAS';
+	var $column_order = array(null, 'mue_fecha_muestreo','mue_n_muestra','mue_elemento','obr_nombre','cli_nombre'); //set column field database for datatable orderable
+	var $column_search = array('mue_n_muestra','mue_fecha_muestreo','obr_nombre','cli_nombre','mue_elemento'); //set column field database for datatable searchable 
+	var $order = array('mue_fecha_muestreo' => 'desc'); // default order 
 
 
 	public function __construct()
@@ -15,96 +15,94 @@ class muestra_model extends CI_Model {
 	{
 		if ($id === FALSE)
 		{
-			$this->db->select('muestras.*,obras.nombre as nombre_obra,clientes.nombre as nombre_cliente');
-			$this->db->from('muestras');
-			$this->db->join('obras', 'obras.id_obra = muestras.id_obra');
-			$this->db->join('clientes', 'clientes.id_cliente = obras.id_cliente');
-			$this->db->order_by("fecha_muestreo", "desc"); 
+			$this->db->select('*');
+			$this->db->from('MUESTRAS');
+			$this->db->join('obras', 'obras.obr_id = MUESTRAS.obr_id');
+			$this->db->join('clientes', 'clientes.cli_id = obras.cli_id');
+			$this->db->order_by("mue_fecha_muestreo", "desc"); 
 			$query = $this->db->get();
 			return $query->result_array();
 		}
 
-			$this->db->select('muestras.*,obras.nombre as nombre_obra,clientes.nombre as nombre_cliente');
-			$this->db->from('muestras');
-			$this->db->join('obras', 'obras.id_obra = muestras.id_obra');
-			$this->db->join('clientes', 'clientes.id_cliente = obras.id_cliente');
-			$this->db->where('id_muestra='.$id);
-			$this->db->order_by("fecha_muestreo", "desc"); 
+			$this->db->select('*');
+			$this->db->from('MUESTRAS');
+			$this->db->join('obras', 'obras.obr_id = MUESTRAS.obr_id');
+			$this->db->join('clientes', 'clientes.cli_id = obras.cli_id');
+			$this->db->where('mue_id='.$id);
+			$this->db->order_by("mue_fecha_muestreo", "desc"); 
 			$query = $this->db->get();
 			return $query->row_array();
 	}
 	public function set_muestra()
 	{
 
-		$data = array('id_muestra' => $this->input->post('id_muestra'),
-				'id_cliente' => $this->input->post('id_cliente'),
-				'id_obra' => $this->input->post('id_obra'),
-				'ubicacion' => $this->input->post('ubicacion'),
-				'num_muestra' => $this->input->post('num_muestra'),
-				'fecha_muestreo' => $this->input->post('fecha_muestreo'),	
-				'elemen_hormi' => $this->input->post('elemen_hormi'),
-				'guia' => $this->input->post('guia'),
-				'h_planta' => $this->input->post('h_planta'),
-				't_ambiente' => $this->input->post('t_ambiente'),
-				'num_camion' => $this->input->post('num_camion'),
-				'h_obra' => $this->input->post('h_obra'),
-				'id_planta' => $this->input->post('id_planta'),
-				'cntm3' => $this->input->post('cntm3'),
-				'h_descarga' => $this->input->post('h_descarga'),
-				't_hormigon' => $this->input->post('t_hormigon'),
-				'aire' => $this->input->post('aire'),
-				'h_muestreo' => $this->input->post('h_muestreo'),
-				'asentamiento' => $this->input->post('asentamiento'),
-				'aditivos' => $this->input->post('aditivos'),
-				'compactacion' => $this->input->post('compactacion'),
-				'camion' => $this->input->post('camion'),
-				'hormigon_grado' => $this->input->post('hormigon_grado'),
-				'fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
-				'observaciones' => $this->input->post('observaciones'),
-				'id_cemento' => $this->input->post('id_cemento')
+		$data = array('mue_id' => $this->input->post('mue_id'),
+				'obr_id' => $this->input->post('obr_id'),
+				'mue_ubicacion' => $this->input->post('ubicacion'),
+				'mue_n_muestra' => $this->input->post('num_muestra'),
+				'mue_fecha_muestreo' => $this->input->post('mue_fecha_muestreo'),	
+				'mue_elemento_hormigonado' => $this->input->post('elemen_hormi'),
+				'mue_guia' => $this->input->post('guia'),
+				'mue_hora_planta' => $this->input->post('h_planta'),
+				'mue_temperatura_ambiente' => $this->input->post('t_ambiente'),
+				'mue_numero_camion' => $this->input->post('num_camion'),
+				'mue_hora_obra' => $this->input->post('h_obra'),
+				'pla_id' => $this->input->post('pla_id'),
+				'mue_cntm3' => $this->input->post('cntm3'),
+				'mue_hora_descarga' => $this->input->post('h_descarga'),
+				'mue_temperatura_hormigon' => $this->input->post('t_hormigon'),
+				'mue_aire' => $this->input->post('aire'),
+				'mue_hora_muestreo' => $this->input->post('h_muestreo'),
+				'mue_asentamiento_cono' => $this->input->post('asentamiento'),
+				'adi_id' => $this->input->post('adi_id'),
+				'mue_compactacion' => $this->input->post('compactacion'),
+				'cam_id' => $this->input->post('camion'),
+				'hor_id' => $this->input->post('hor_id'),
+				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
+				'mue_observaciones' => $this->input->post('observaciones'),
+				'cem_id' => $this->input->post('id_cemento')
 			);
-		return $this->db->insert('muestras', $data);
+		return $this->db->insert('MUESTRAS', $data);
 	}	
 	public function edit_muestra($id)
 	{
-		$data = array('id_muestra' => $this->input->post('id_muestra'),
-				'id_cliente' => $this->input->post('id_cliente'),
-				'id_obra' => $this->input->post('id_obra'),
-				'ubicacion' => $this->input->post('ubicacion'),
-				'num_muestra' => $this->input->post('num_muestra'),
-				'fecha_muestreo' => $this->input->post('fecha_muestreo'),	
-				'elemen_hormi' => $this->input->post('elemen_hormi'),
-				'guia' => $this->input->post('guia'),
-				'h_planta' => $this->input->post('h_planta'),
-				't_ambiente' => $this->input->post('t_ambiente'),
-				'num_camion' => $this->input->post('num_camion'),
-				'h_obra' => $this->input->post('h_obra'),
-				'planta_num' => $this->input->post('planta_num'),
-				'cntm3' => $this->input->post('cntm3'),
-				'h_descarga' => $this->input->post('h_descarga'),
-				't_hormigon' => $this->input->post('t_hormigon'),
-				'aire' => $this->input->post('aire'),
-				'h_muestreo' => $this->input->post('h_muestreo'),
-				'asentamiento' => $this->input->post('asentamiento'),
-				'aditivos' => $this->input->post('aditivos'),
-				'compactacion' => $this->input->post('compactacion'),
-				'camion' => $this->input->post('camion'),
-				'fec_ingreo' => $this->input->post('fec_ingreo'),
-				'login' => $this->input->post('login'),
-				'hormigon_grado' => $this->input->post('hormigon_grado'),
-				'fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
-				'observaciones' => $this->input->post('observaciones'),
-				'id_cemento' => $this->input->post('id_cemento')
+		$data = array('mue_id' => $this->input->post('mue_id'),
+				'obr_id' => $this->input->post('obr_id'),
+				'mue_ubicacion' => $this->input->post('ubicacion'),
+				'mue_num_muestra' => $this->input->post('num_muestra'),
+				'mue_fecha_muestreo' => $this->input->post('fecha_muestreo'),	
+				'mue_elemen_hormi' => $this->input->post('elemen_hormi'),
+				'mue_guia' => $this->input->post('guia'),
+				'mue_h_planta' => $this->input->post('h_planta'),
+				'mue_t_ambiente' => $this->input->post('t_ambiente'),
+				'mue_num_camion' => $this->input->post('num_camion'),
+				'mue_h_obra' => $this->input->post('h_obra'),
+				'mue_planta_num' => $this->input->post('planta_num'),
+				'mue_cntm3' => $this->input->post('cntm3'),
+				'mue_h_descarga' => $this->input->post('h_descarga'),
+				'mue_t_hormigon' => $this->input->post('t_hormigon'),
+				'mue_aire' => $this->input->post('aire'),
+				'mue_h_muestreo' => $this->input->post('h_muestreo'),
+				'mue_asentamiento' => $this->input->post('asentamiento'),
+				'mue_aditivos' => $this->input->post('aditivos'),
+				'mue_compactacion' => $this->input->post('compactacion'),
+				'mue_camion' => $this->input->post('camion'),
+				'mue_fec_ingreo' => $this->input->post('fec_ingreo'),
+				'mue_login' => $this->input->post('login'),
+				'mue_hormigon_grado' => $this->input->post('hormigon_grado'),
+				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
+				'mue_observaciones' => $this->input->post('observaciones'),
+				'cem_id' => $this->input->post('cem_id')
 			);
-			$this->db->where('id_muestra', $id);
-		return $this->db->update('muestras', $data);
+			$this->db->where('mue_id', $id);
+		return $this->db->update('MUESTRAS', $data);
 	}
 
 
 	public function del_muestra($id)
 	{
 		$this->db->where('id_muestra', $id);
-		return $this->db->delete('muestras');
+		return $this->db->delete('MUESTRAS');
 	}
 
 
@@ -112,10 +110,10 @@ class muestra_model extends CI_Model {
 
 private function _get_datatables_query()
 	{
-		$this->db->select('muestras.*,obras.nombre as nombre_obra,clientes.nombre as nombre_cliente');
+		$this->db->select('*');
 		$this->db->from('muestras');
-		$this->db->join('obras', 'obras.id_obra = muestras.id_obra');
-		$this->db->join('clientes', 'clientes.id_cliente = obras.id_cliente');
+		$this->db->join('obras', 'obras.obr_id = muestras.obr_id');
+		$this->db->join('clientes', 'clientes.cli_id = obras.cli_id');
 		
 		//$this->db->from($this->table);
 

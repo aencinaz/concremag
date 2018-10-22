@@ -21,26 +21,26 @@
 
            		<div class="form-group">
                   <label class="control-label">Cliente</label>
-			<select name="id_cliente" class="form-control" id="exampleFormControlSelect1">
+			<select name="cli_id" class="form-control" id="exampleFormControlSelect1">
     	 	<?php foreach ($clientes as $cliente_item): ?>
-			<option value="<?php echo $cliente_item['id_cliente']; ?>"><?php echo $cliente_item['nombre']; ?></option>
+			<option value="<?php echo $cliente_item['cli_id']; ?>"><?php echo $cliente_item['cli_nombre']; ?></option>
 			<?php endforeach; ?>
     		</select>
-    		  <div class="form-control-feedback"> <?php echo form_error('id_cliente'); ?> </div>
+    		  <div class="form-control-feedback"> <?php echo form_error('cli_id'); ?> </div>
                 </div>
 
 
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text">
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="obr_nombre" type="text">
+                  <div class="form-control-feedback"> <?php echo form_error('obr_nombre'); ?> </div>
                 </div>
 
               
                  <div class="form-group">
                   <label class="control-label">Ubicación</label>
-                  <input class="form-control" autocomplete="off" name="ubicacion" type="text" >
-                  <div class="form-control-feedback"> <?php echo form_error('ubicacion'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="obr_ubicacion" type="text" >
+                  <div class="form-control-feedback"> <?php echo form_error('obr_ubicacion'); ?> </div>
                 </div>
                  
   

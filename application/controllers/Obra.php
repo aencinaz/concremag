@@ -63,7 +63,7 @@ class Obra extends CI_Controller {
 		$data['selected']="Administración";
 		$data['link_selected']="Nuevo";
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('obr_nombre', 'Nombre', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -95,7 +95,7 @@ class Obra extends CI_Controller {
 		$data['id']=$id;
 
 
-		$this->form_validation->set_rules('nombre', 'Nombre', 'required');
+		$this->form_validation->set_rules('obr_nombre', 'Nombre', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{

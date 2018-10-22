@@ -20,30 +20,30 @@
            
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text" value="<?php echo $cliente['nombre']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cli_nombre" type="text" value="<?php echo $cliente['cli_nombre']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('cli_nombre'); ?> </div>
                  
                 </div>
 
 
                  <div class="form-group">
                   <label class="control-label">RUT</label>
-                  <input class="form-control" autocomplete="off" name="rut" type="text" value="<?php echo $cliente['rut']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('rut'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cli_rut" type="text" value="<?php echo $cliente['cli_rut']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('cli_rut'); ?> </div>
                  
                 </div>
 
                  <div class="form-group">
                   <label class="control-label">Teléfono</label>
-                  <input class="form-control" autocomplete="off" name="telefono" type="text" value="<?php echo $cliente['telefono']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('telefono'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cli_telefono" type="text" value="<?php echo $cliente['cli_telefono']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('cli_telefono'); ?> </div>
                  
                 </div>
 
                  <div class="form-group">
                   <label class="control-label">Dirección</label>
-                  <input class="form-control" autocomplete="off" name="direccion" type="text" value="<?php echo $cliente['direccion']?>" >
-                  <div class="form-control-feedback"> <?php echo form_error('direccion'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cli_direccion" type="text" value="<?php echo $cliente['cli_direccion']?>" >
+                  <div class="form-control-feedback"> <?php echo form_error('cli_direccion'); ?> </div>
                  
                 </div>
   

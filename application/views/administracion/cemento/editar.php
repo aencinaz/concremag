@@ -20,16 +20,16 @@
            
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text" value="<?php echo $cemento['nombre']?>" placeholder="Ingrese Nombre">
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cem_nombre" type="text" value="<?php echo $cemento['cem_nombre']?>" placeholder="Ingrese Nombre">
+                  <div class="form-control-feedback"> <?php echo form_error('cem_nombre'); ?> </div>
                  
                 </div>
 
 
                  <div class="form-group">
                   <label class="control-label">Descripción</label>
-                  <input class="form-control" autocomplete="off" name="descripcion" type="text" value="<?php echo $cemento['descripcion']?>" placeholder="Ingrese Descripción">
-                  <div class="form-control-feedback"> <?php echo form_error('descripcion'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="cem_descripcion" type="text" value="<?php echo $cemento['cem_descripcion']?>" placeholder="Ingrese Descripción">
+                  <div class="form-control-feedback"> <?php echo form_error('cem_descripcion'); ?> </div>
                  
                 </div>
   

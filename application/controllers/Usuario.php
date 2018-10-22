@@ -42,6 +42,8 @@ class usuario extends CI_Controller {
   		
 		$this->load->view('header',$data);
 		$this->load->view('administracion\usuario\listado',$data);
+		$this->load->view('essential_js');
+		
 		$this->load->view('footer');
 	}
 	public function nuevo()
@@ -60,6 +62,8 @@ class usuario extends CI_Controller {
 		{
 			$this->load->view('header',$data);
 			$this->load->view('administracion\usuario\nuevo',$data);
+			$this->load->view('essential_js');
+		
 			$this->load->view('footer');
 		}
 		else
@@ -91,6 +95,8 @@ class usuario extends CI_Controller {
 			$data['usuario']=$this->usuario_model->get_usuario($id);	
 			$this->load->view('header',$data);
 			$this->load->view('administracion\usuario\editar',$data);
+			$this->load->view('essential_js');
+		
 			$this->load->view('footer');
 		}
 		else

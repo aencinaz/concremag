@@ -20,18 +20,16 @@
            
      			<div class="form-group">
                   <label class="control-label">Nombre</label>
-                  <input class="form-control" autocomplete="off" name="nombre" type="text">
-                  <div class="form-control-feedback"> <?php echo form_error('nombre'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="hor_nombre" type="text">
+                  <div class="form-control-feedback"> <?php echo form_error('hor_nombre'); ?> </div>
                 </div>
 
               
                  <div class="form-group">
                   <label class="control-label">Descripción</label>
-                  <input class="form-control" autocomplete="off" name="descripcion" type="text" >
-                  <div class="form-control-feedback"> <?php echo form_error('descripcion'); ?> </div>
+                  <input class="form-control" autocomplete="off" name="hor_descripcion" type="text" >
+                  <div class="form-control-feedback"> <?php echo form_error('hor_descripcion'); ?> </div>
                 </div>
-                 
-  
 
             <div class="tile-footer">
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="<?php echo base_url()."hormigon/listar";?>"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancelar</a>
