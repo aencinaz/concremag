@@ -30,12 +30,15 @@
 
 
      <ul class="app-menu">
-       <li><a class="app-menu__item <?php if($selected=="muestra") echo "active"?> " href="<?php echo base_url();?>muestra\listar">
-        <i class="app-menu__icon fa fa-bug fa-lg"></i>
-        <span class="app-menu__label">Muestras</span></a>
+      <li class="treeview"><a class="app-menu__item <?php if($selected=="Muestras") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-database fa-lg"></i><span class="app-menu__label">Muestras</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu ">
+            <li><a class="treeview-item" href="<?php echo base_url();?>muestra/listar"><i class="icon fa fa-circle-o"></i> Buscar</a></li>
+            <li><a class="treeview-item" href="<?php echo base_url();?>muestra/nuevo/hormigon"><i class="icon fa fa-circle-o"></i> Ingresar Muestra Hormigón</a></li>
+            <li><a class="treeview-item" href="<?php echo base_url();?>muestra/nuevo/prefabricado"><i class="icon fa fa-circle-o"></i> Ingresar Muestra Prefabricado</a></li>
+        </ul>
       </li>
       <li><a class="app-menu__item <?php if($selected=="prefabricado") echo "active"?>" href="<?php echo base_url();?>prefabricado\listar">   
-        <i class="app-menu__icon fa fa-calendar fa-lg"></i><span class="app-menu__label">Muestras Prefabricado</span></a>
+        <i class="app-menu__icon fa fa-calendar fa-lg"></i><span class="app-menu__label">Informes</span></a>
       </li>
         <li class="treeview"><a class="app-menu__item <?php if($selected=="Administración") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-cog fa-lg"></i><span class="app-menu__label">Administración</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu ">

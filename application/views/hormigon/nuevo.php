@@ -1,4 +1,4 @@
-<?php echo form_open(base_url()."muestra/nuevo") ?> 
+<?php echo form_open(base_url()."muestra/nuevo/hormigon") ?> 
  <main class="app-content">
       <div class="app-title">
         <div>

@@ -33,7 +33,7 @@ class Muestra extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('muestra_model');
 		
-		$data['selected']="Hormigón";
+		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
 		$data['muestras']=$this->muestra_model->get_muestra();	
 		$this->load->view('header',$data);
@@ -52,7 +52,7 @@ class Muestra extends CI_Controller {
 		$this->load->model('ensayo_model');
 		
 		
-		$data['selected']="Hormigón";
+		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
 		$data['muestra']=$this->muestra_model->get_muestra($id);	
 		$data['ensayos']=$this->ensayo_model->get_ensayo_muestra($id);	
@@ -76,7 +76,7 @@ class Muestra extends CI_Controller {
 		$this->load->model('ensayo_model');
 		$this->load->model('muestra_model');
 
-		$data['selected']="Hormigón";
+		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
 		$data['ensayo']=$this->ensayo_model->get_ensayo($id);	
 		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['mue_id']);	
@@ -128,7 +128,7 @@ class Muestra extends CI_Controller {
 
 		$this->load->model('muestra_model');
 		$data['id']=$id;
-		$data['selected']="Hormigón";
+		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
 		$data['muestra']=$this->muestra_model->get_muestra($id);	
 		$this->load->view('header',$data);
@@ -139,7 +139,7 @@ class Muestra extends CI_Controller {
 
 
 
-	public function nuevo()
+	public function nuevo($elemento)
 	{
 		$this->load->helper('url');
 		$this->load->library('form_validation');
@@ -158,7 +158,7 @@ class Muestra extends CI_Controller {
 		$data['plantas']=$this->planta_model->get_planta();	
 		$data['cementos']=$this->cemento_model->get_cemento();	
 		
-		$data['selected']="Hormigón";
+		$data['selected']="Muestras";
 		$data['link_selected']="Nuevo";
 
 		$this->form_validation->set_rules('num_muestra', 'Numero de Muestra', 'required');
@@ -166,15 +166,14 @@ class Muestra extends CI_Controller {
 		$this->form_validation->set_rules('obr_id', 'Obra', 'required');
 		$this->form_validation->set_rules('cli_id', 'Cliente', 'required');
 		
-		$this->form_validation->set_rules('compactacion', 'Compactación', 'required');
-		$this->form_validation->set_rules('camion', 'camión', 'required');
-		$this->form_validation->set_rules('pla_id', 'Planta', 'required');
-		$this->form_validation->set_rules('cem_id', 'Cemento', 'required');
-				
+					
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('header',$data);
-			$this->load->view('hormigon\nuevo',$data);
+			if($elemento==='hormigon')
+				$this->load->view('hormigon\nuevo',$data);
+			else
+				$this->load->view('prefabricado\nuevo',$data);
 			$this->load->view('essential_js');
 			$this->load->view('hormigon\specific_js');
 			$this->load->view('footer');
@@ -183,7 +182,7 @@ class Muestra extends CI_Controller {
 		{
 			
 
-			if($this->muestra_model->set_muestra())
+			if($this->muestra_model->set_muestra($elemento))
 			{
 			$id_muestra=$this->db->insert_id();
 			$fecha_muestra		= $this->input->post('fecha_muestreo');
@@ -222,11 +221,11 @@ class Muestra extends CI_Controller {
 
 				
 			}
-			 	redirect(base_url().'/muestrahormigon/listar/success', 'location');	
+			 	redirect(base_url().'muestra/listar/success', 'location');	
 
 			}
 			else
-			 	redirect(base_url().'/muestrahormigon/listar/error', 'location');
+			 	redirect(base_url().'muestra/listar/error', 'location');
 		}
 	}
 
@@ -276,9 +275,9 @@ class Muestra extends CI_Controller {
 		$data['id']=$id;
 
 		if($this->muestra_model->del_muestra($id))
-			 	redirect(base_url().'/muestrahormigon/listar/success', 'location');	
+			 	redirect(base_url().'/muestra/listar/success', 'location');	
 		else
-			 	redirect(base_url().'/muestrahormigon/listar/error', 'location');
+			 	redirect(base_url().'/muestra/listar/error', 'location');
 
 	}
 

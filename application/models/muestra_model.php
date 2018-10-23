@@ -28,19 +28,27 @@ class muestra_model extends CI_Model {
 			$this->db->from('MUESTRAS');
 			$this->db->join('obras', 'obras.obr_id = MUESTRAS.obr_id');
 			$this->db->join('clientes', 'clientes.cli_id = obras.cli_id');
+			$this->db->join('aditivos', 'aditivos.adi_id = muestras.adi_id','left');
+			$this->db->join('hormigones', 'hormigones.hor_id = muestras.hor_id','left');
+			$this->db->join('camiones', 'camiones.cam_id = muestras.cam_id','left');
+			$this->db->join('cementos', 'cementos.cem_id = muestras.cem_id','left');
+			$this->db->join('plantas', 'plantas.pla_id = muestras.pla_id','left');
+			
 			$this->db->where('mue_id='.$id);
 			$this->db->order_by("mue_fecha_muestreo", "desc"); 
 			$query = $this->db->get();
 			return $query->row_array();
 	}
-	public function set_muestra()
+	public function set_muestra($mue_elemento)
 	{
 
 		$data = array('mue_id' => $this->input->post('mue_id'),
+				'mue_elemento' => $mue_elemento,
 				'obr_id' => $this->input->post('obr_id'),
 				'mue_ubicacion' => $this->input->post('ubicacion'),
 				'mue_n_muestra' => $this->input->post('num_muestra'),
-				'mue_fecha_muestreo' => $this->input->post('mue_fecha_muestreo'),	
+				'mue_fecha_muestreo' => $this->input->post('mue_fecha_muestreo'),
+				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),	
 				'mue_elemento_hormigonado' => $this->input->post('elemen_hormi'),
 				'mue_guia' => $this->input->post('guia'),
 				'mue_hora_planta' => $this->input->post('h_planta'),
@@ -58,7 +66,6 @@ class muestra_model extends CI_Model {
 				'mue_compactacion' => $this->input->post('compactacion'),
 				'cam_id' => $this->input->post('camion'),
 				'hor_id' => $this->input->post('hor_id'),
-				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
 				'mue_observaciones' => $this->input->post('observaciones'),
 				'cem_id' => $this->input->post('id_cemento')
 			);
