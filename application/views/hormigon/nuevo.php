@@ -165,13 +165,11 @@
             <div class="form-group row">
               <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Tipo de Camión</label>
               <div class="col-sm-6">
-                 <select name="camion" class="form-control form-control-sm" >
-                       <option value=""></option>
-             
-                  <option value="1" <?php echo set_select('camion',1); ?>  >Betonero</option>
-                  <option value="2" <?php echo set_select('camion',2); ?>  >Mixer</option>
-                  <option value="3" <?php echo set_select('camion',3); ?>  >Tolva</option>
-                  <option value="4" <?php echo set_select('camion',4); ?>  >Otros</option>
+                 <select name="cam_id" class="form-control form-control-sm" >
+                    <?php foreach ($camiones as $camion_item): ?>
+                           <option value=""></option>
+                  <option value="<?php echo $camion_item['cam_id']; ?>" <?php echo set_select('cam_id',$camion_item['cam_id']); ?>  ><?php echo $camion_item['cam_nombre']; ?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
             </div>

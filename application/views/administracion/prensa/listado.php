@@ -32,7 +32,8 @@
 			      <th scope="col">#</th>
 			      <th scope="col">Nombre</th>
 			      <th scope="col">Fecha</th>
-			      <th scope="col">Editar</th>
+			      <th scope="col">Calibraciones</th>
+            <th scope="col">Editar</th>
 			      <th scope="col">Eliminar</th>
 			    </tr>
 			  </thead>
@@ -42,7 +43,8 @@
 			      <th scope="row"><?php echo $i; ?></th>
 			      <td><?php echo $prensa_item['pre_nombre']; ?></td>
 			      <td><?php echo $prensa_item['pre_fecha']; ?></td>
-			      <td><a href="<?php echo base_url().'prensa/editar/'.$prensa_item['pre_id']; ?>">Editar</a></td>
+			      <td><a href="<?php echo base_url().'prensa/calibraciones/'.$prensa_item['pre_id']; ?>">Calibraciones</a></td>
+            <td><a href="<?php echo base_url().'prensa/editar/'.$prensa_item['pre_id']; ?>">Editar</a></td>
 			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'prensa/eliminar/'.$prensa_item['pre_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>

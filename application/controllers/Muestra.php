@@ -152,12 +152,14 @@ class Muestra extends CI_Controller {
 		$this->load->model('planta_model');
 		$this->load->model('cemento_model');
 		$this->load->model('ensayo_model');
+		$this->load->model('camion_model');
 
 		$data['clientes']=$this->cliente_model->get_cliente();	
 		$data['hormigones']=$this->hormigon_model->get_hormigon();	
 		$data['plantas']=$this->planta_model->get_planta();	
 		$data['cementos']=$this->cemento_model->get_cemento();	
-		
+		$data['camiones']=$this->camion_model->get_camion();	
+			
 		$data['selected']="Muestras";
 		$data['link_selected']="Nuevo";
 
