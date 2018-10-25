@@ -1,12 +1,13 @@
  <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Prensa     <a href="<?php echo base_url();?>prensa\nuevo" class="btn btn-primary" type="button">Nuevo</a> </h1>       
-          <p>Listado de Prensas</p>
+          <h1><i class="fa fa-th-list"></i> Calibración     <a href="<?php echo base_url(); ?>calibracion\nuevo\<?php echo $id; ?>" class="btn btn-primary" type="button">Nuevo</a> </h1>       
+          <p>Listado de Calibracion de Prensa</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">prensa</a></li>
+          <li class="breadcrumb-item"><a href="#">Prensa</a></li>
+          <li class="breadcrumb-item"><a href="#">Calibracion</a></li>
         </ul>
       </div>
         <!-- Buttons-->
@@ -30,29 +31,24 @@
         	  <thead>
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">Nombre</th>
 			      <th scope="col">Fecha</th>
-			      <th scope="col">Calibraciones</th>
+			      <th scope="col">Descripción</th>
             <th scope="col">Editar</th>
 			      <th scope="col">Eliminar</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			  	<?php $i=1; foreach ($prensas as $prensa_item): ?>
+			  	<?php $i=1; foreach ($calibraciones as $calibracion_item): ?>
 			    <tr>
 			      <th scope="row"><?php echo $i; ?></th>
-			      <td><?php echo $prensa_item['pre_nombre']; ?></td>
-			      <td><?php echo $prensa_item['pre_fecha']; ?></td>
-			      <td><a href="<?php echo base_url().'calibracion/listar/'.$prensa_item['pre_id']; ?>">Calibraciones</a></td>
-            <td><a href="<?php echo base_url().'prensa/editar/'.$prensa_item['pre_id']; ?>">Editar</a></td>
-			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'prensa/eliminar/'.$prensa_item['pre_id']; ?>">Eliminar</a></td>
+			      <td><?php echo $calibracion_item['cal_fecha']; ?></td>
+			      <td><?php echo $calibracion_item['cal_descripcion']; ?></td>
+            <td><a href="<?php echo base_url().'calibracion/editar/'.$calibracion_item['cal_id']; ?>">Editar</a></td>
+			      <td><a id="confirmar"  onclick="return confirmar()" href="<?php echo base_url().'prensa/eliminar/'.$calibracion_item['cal_id']; ?>">Eliminar</a></td>
 			     </tr>
 			    <?php $i++; endforeach; ?>
 			  </tbody>
 			</table>
-
-
-        
           </div>
         </div>
       </div>
