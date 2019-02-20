@@ -17,18 +17,28 @@ class calibracion_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function set_calibracion($id_planta)
+	public function set_calibracion($id_prensa)
 	{
 		$data = array('cal_descripcion' => $this->input->post('cal_descripcion'),
 				'cal_fecha' => $this->input->post('cal_fecha'),	
-				'pre_id' => $id_planta	
+				'cal_a' => $this->input->post('cal_a'),	
+				'cal_b' => $this->input->post('cal_b'),	
+				'cal_c' => $this->input->post('cal_c'),	
+				'cal_simbolo_1' => $this->input->post('cal_simbolo_1'),	
+				'cal_simbolo_2' => $this->input->post('cal_simbolo_2'),	
+				'pre_id' => $id_prensa	
 			);
 		return $this->db->insert('calibraciones', $data);
 	}	
 	public function edit_calibracion($id)
 	{
-		$data = array('pre_nombre' => $this->input->post('cal_descricion'),
-				'pre_fecha' => $this->input->post('cal_fecha')		
+		$data = array('cal_descripcion' => $this->input->post('cal_descripcion'),
+				'cal_fecha' => $this->input->post('cal_fecha'),	
+				'cal_a' => $this->input->post('cal_a'),	
+				'cal_b' => $this->input->post('cal_b'),	
+				'cal_c' => $this->input->post('cal_c'),	
+				'cal_simbolo_1' => $this->input->post('cal_simbolo_1'),	
+				'cal_simbolo_2' => $this->input->post('cal_simbolo_2'),			
 			);
 			$this->db->where('cal_id', $id);
 		return $this->db->update('calibraciones', $data);

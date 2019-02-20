@@ -13,7 +13,7 @@ class Principal extends CI_Controller
 		$data['selected']="";
 		$this->load->helper('url');
 		$this->load->view('header',$data);
-		$this->load->view('dasboard',$data);
+		//$this->load->view('dasboard',$data);
 		$this->load->view('essential_js');
 		$this->load->view('specific_char_js');
 			$this->load->view('footer');

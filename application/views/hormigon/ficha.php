@@ -257,7 +257,7 @@
 
                                           <div class="row d-print-none mt-2">
                 <div class="col-12 text-right">
-                    <a class="btn btn-primary" href="<?php echo base_url().'muestrahormigon/formulario/'.$muestra['mue_id']; ?>" target="_blank"><i class="fa fa-print"></i> Formulario de Ensaye</a>
+                    <a class="btn btn-primary" href="<?php echo base_url().'muestra/formulario/'.$muestra['mue_id']; ?>" target="_blank"><i class="fa fa-print"></i> Formulario de Ensaye</a>
                 </div>
               </div>
             
@@ -294,7 +294,7 @@
                       <td><?php echo $ensayo_item['ens_densidad']; ?></td>
                       <td><?php echo $ensayo_item['ens_resistencia_cubica']; ?></td>
                       <td><?php echo $ensayo_item['ens_resistencia_mpa']; ?></td>
-                      <td><a href="<?php echo base_url().'muestrahormigon/ensayo/'.$ensayo_item['ens_id']; ?>">Editar</a></td>
+                      <td><a href="<?php echo base_url().'muestra/ensayo/'.$ensayo_item['ens_id']; ?>">Editar</a></td>
                      </tr>
                     <?php $i++; endforeach; ?>
                   </tbody>

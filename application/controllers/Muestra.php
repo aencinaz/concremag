@@ -75,9 +75,13 @@ class Muestra extends CI_Controller {
 	
 		$this->load->model('ensayo_model');
 		$this->load->model('muestra_model');
+		$this->load->model('prensa_model');
 
 		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
+		
+		$data['prensas']=$this->prensa_model->get_prensa();	
+		
 		$data['ensayo']=$this->ensayo_model->get_ensayo($id);	
 		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['mue_id']);	
 		
@@ -89,7 +93,7 @@ class Muestra extends CI_Controller {
 						$this->load->view('header',$data);
 						switch ( $data['ensayo']['ens_tipo_probeta']) {
 							case 'Cilindro':
-								if($data['ensayo']['ensaye']=='Compresión')
+								if($data['ensayo']['ens_ensaye']=='Compresión')
 										$this->load->view('hormigon\ensayo\cilindro_compresion',$data);
 								else
 										$this->load->view('hormigon\ensayo\cilindro_hendimiento',$data);
@@ -102,6 +106,7 @@ class Muestra extends CI_Controller {
 							break;
 						}
 						$this->load->view('essential_js');
+						$this->load->view('hormigon\ensayo\specific_js');
 						$this->load->view('footer');
 		}
 		else

@@ -61,9 +61,9 @@ class Calibracion extends CI_Controller {
 		else
 		{
 			if($this->calibracion_model->set_calibracion($id))
-			 	redirect(base_url().'/calibracion/listar/success', 'location');	
+			 	redirect(base_url().'/calibracion/listar/'.$id.'/success', 'location');	
 		else
-			 	redirect(base_url().'/calibracion/listar/error', 'location');
+			 	redirect(base_url().'/calibracion/listar/'.$id.'/error', 'location');
 			 
 		}
 	}
@@ -79,12 +79,13 @@ class Calibracion extends CI_Controller {
 		$data['link_selected']="Listado";
 		$data['id']=$id;
 
+		$data['calibracion']=$this->calibracion_model->get_calibracion($id);
 
 		$this->form_validation->set_rules('cal_descripcion', 'Descripcion', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$data['calibracion']=$this->calibracion_model->get_calibracion($id);	
+			
 			$this->load->view('header',$data);
 			$this->load->view('administracion\calibracion\editar',$data);
 			$this->load->view('essential_js');
@@ -94,9 +95,9 @@ class Calibracion extends CI_Controller {
 		{
 			
 			if($this->calibracion_model->edit_calibracion($id))
-			 	redirect(base_url().'/calibracion/listar/success', 'location');	
+			 	redirect(base_url().'calibracion/listar/'.$data['calibracion']['pre_id'].'/success', 'location');	
 		else
-			 	redirect(base_url().'/calibracion/listar/error', 'location');
+			 	redirect(base_url().'calibracion/listar/'.$data['calibracion']['pre_id'].'/error', 'location');
 		}
 	}
 	public function eliminar($id)
@@ -113,5 +114,24 @@ class Calibracion extends CI_Controller {
 			 	redirect(base_url().'/calibracion/listar/success', 'location');	
 		else
 			 	redirect(base_url().'/calibracion/listar/error', 'location');
+	}
+
+
+
+
+public function listar_json($id)
+	{
+	
+	$this->load->model('calibracion_model');
+		$calibracion=$this->calibracion_model->get_calibraciones($id);	
+		$data = array();
+		foreach ($calibracion as $item) {	
+			$row = array();	
+			$row[] = $item['cal_id'];
+			$row[] = $item['cal_descripcion'];
+			$data[] =$row;
+		}
+		//output to json format
+		echo json_encode($data);
 	}
 }
