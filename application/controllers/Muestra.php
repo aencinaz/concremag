@@ -296,9 +296,9 @@ class Muestra extends CI_Controller {
 
 		foreach ($data['ensayos'] as $ensayo ) {
 				
-				switch ( $ensayo['tipo_probeta']) {
+				switch ( $ensayo['ens_tipo_probeta']) {
 							case 'Cilindro':
-								if($ensayo['ensaye']=='Compresión')
+								if($ensayo['ens_ensaye']=='Compresión')
 									$cilindro_compresion[] = $ensayo;
 								else
 									$cilindro_hendimiento[]= $ensayo;
@@ -337,11 +337,11 @@ if($i>0)
 				for ($i=0; $i <6 ; $i++) { 
 					if(!isset($ensayo[$x+$i]['edad']))
 					{
-					    $ensayo[$x+$i]['id_muestra']="";
-						$ensayo[$x+$i]['tipo_probeta']="";
-						$ensayo[$x+$i]['ensaye']="";
-						$ensayo[$x+$i]['fecha_ensaye']="";
-						$ensayo[$x+$i]['edad']="";
+					    $ensayo[$x+$i]['mue_id']="";
+						$ensayo[$x+$i]['ens_tipo_probeta']="";
+						$ensayo[$x+$i]['ens_ensaye']="";
+						$ensayo[$x+$i]['ens_fecha_ensaye']="";
+						$ensayo[$x+$i]['ens_edad']="";
 					}
 				}
 							print '
@@ -406,57 +406,57 @@ if($i>0)
 								  </tr>
 								  <tr bordercolor="#00000">
 									<td border="1" width="151" height="16"><span class="Estilo36">Muestra N&deg; </span></td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+0]['id_muestra'].'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+1]['id_muestra'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+2]['id_muestra'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+3]['id_muestra'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+4]['id_muestra'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+5]['id_muestra'] .'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+0]['mue_id'].'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+1]['mue_id'] .'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+2]['mue_id'] .'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+3]['mue_id'] .'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+4]['mue_id'] .'</td>
+									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+5]['mue_id'] .'</td>
 								  </tr>
 								  <tr bordercolor="#00000">
 									<td border="1" height="16"><span class="Estilo36">Fecha de Confecci&oacute;n </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_edad'] .'</td>
 								  </tr>
 								  <tr bordercolor="#0000000">
 									<td border="1" height="16"><span class="Estilo36">Tipo de Probeta </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['ens_tipo_probeta'] .'</td>
 								  </tr>
 								  <tr bordercolor="#000000">
 									<td border="1" height="16"><span class="Estilo36">Ensaye</span></td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_ensaye'] .'</td>
 								  </tr>
 								  <tr bordercolor="#0000000">
 									<td border="1" height="16" class="Estilo36">Fecha de ensaye </td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_fecha_ensaye'] .'</td>
 								  </tr>
 								  <tr bordercolor="#0000000">
 									<td border="1" height="16"><span class="Estilo36">Edad (días) </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['ens_edad'] .'</td>
 								  </tr>
 								  <tr bordercolor="#FFFFFFF">
 									<td>&nbsp;</td>
