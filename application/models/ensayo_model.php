@@ -10,11 +10,17 @@ class ensayo_model extends CI_Model {
 		{
 			$this->db->select('*');
 			$this->db->from('ensayos');
+			$this->db->join('calibraciones', 'calibraciones.cal_id = ensayos.cal_id', 'left');
 			$this->db->order_by("fecha_ensaye", "asc"); 
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		$query = $this->db->get_where('ensayos', array('ens_id' => $id));
+
+			$this->db->select('*');
+			$this->db->from('ensayos');
+			$this->db->join('calibraciones', 'calibraciones.cal_id = ensayos.cal_id', 'left');
+			$this->db->where('ens_id',$id);
+		$query = $this->db->get();
 		return $query->row_array();
 	}
 
@@ -23,7 +29,6 @@ public function get_ensayo_muestra($id)
 	{
 		$this->db->select('*');
 		$this->db->from('ensayos');
-		
 		$this->db->where('mue_id',$id);
 		$this->db->order_by("ens_tipo_probeta", "asc"); 
 		$this->db->order_by("ens_ensaye", "asc"); 

@@ -127,11 +127,26 @@ public function listar_json($id)
 		$data = array();
 		foreach ($calibracion as $item) {	
 			$row = array();	
-			$row[] = $item['cal_id'];
 			$row[] = $item['cal_descripcion'];
+			$row[] = $item['cal_id'];
 			$data[] =$row;
 		}
 		//output to json format
 		echo json_encode($data);
 	}
+
+
+public function datos_calibracion_json($id)
+	{
+	
+	$this->load->model('calibracion_model');
+		$calibracion=$this->calibracion_model->get_calibracion($id);	
+			$row[] = $calibracion['cal_a'];
+			$row[] = $calibracion['cal_b'];
+			$row[] = $calibracion['cal_simbolo_1'];
+			$row[] = $calibracion['cal_simbolo_2'];
+		//output to json format
+		echo json_encode($row);
+	}
+
 }

@@ -105,13 +105,7 @@
                                               </div>
 
 
-                                              <div class="form-group row">
-                                                <label for="example-email-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Asentamiento Cono</label>
-                                                <div class="col-sm-6">
-                                                  <input name="asentamiento" autocomplete="off" value="<?php echo $muestra['mue_asentamiento']; ?>" class="form-control form-control-sm" type="text" >
-                                                </div>
-                                              </div>
-
+                                          
                                         
 
                                               <div class="form-group row">
@@ -194,13 +188,7 @@
                                         <div class="col-sm-4">
                                         
 
-                                                  <div class="form-group row">
-                                                    <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Camión N°</label>
-                                                    <div class="col-sm-6">
-                                                      <input name="num_camion" autocomplete="off" value="<?php echo $muestra['cam_numero_camion']; ?>" class="form-control form-control-sm" type="text" >
-                                                    </div>
-                                                  </div>
-
+                                                
 
 
                                                   <div class="form-group row">
@@ -287,14 +275,14 @@
                     <?php $i=1; foreach ($ensayos as $ensayo_item): ?>
                     <tr>
                       <th scope="row"><?php echo $i; ?></th>
-                      <td><?php echo $ensayo_item['fecha_ensaye']; ?></td>
-                      <td><?php echo $ensayo_item['edad']; ?></td>
-                      <td><?php echo $ensayo_item['tipo_probeta']; ?></td>
-                      <td><?php echo $ensayo_item['ensaye']; ?></td>
-                      <td><?php echo $ensayo_item['densidad']; ?></td>
-                      <td><?php echo $ensayo_item['resistencia_cubica']; ?></td>
-                      <td><?php echo $ensayo_item['resistencia_mpa']; ?></td>
-                      <td><a href="<?php echo base_url().'Prefabricado/ensayo/'.$ensayo_item['id_ensayo']; ?>">Editar</a></td>
+                      <td><?php echo $ensayo_item['ens_fecha_ensaye']; ?></td>
+                      <td><?php echo $ensayo_item['ens_edad']; ?></td>
+                      <td><?php echo $ensayo_item['ens_tipo_probeta']; ?></td>
+                      <td><?php echo $ensayo_item['ens_ensaye']; ?></td>
+                      <td><?php echo $ensayo_item['ens_densidad']; ?></td>
+                      <td><?php echo $ensayo_item['ens_resistencia_cubica']; ?></td>
+                      <td><?php echo $ensayo_item['ens_resistencia_mpa']; ?></td>
+                      <td><a href="<?php echo base_url().'muestra/ensayo/'.$ensayo_item['ens_id']; ?>">Editar</a></td>
                      </tr>
                     <?php $i++; endforeach; ?>
                   </tbody>

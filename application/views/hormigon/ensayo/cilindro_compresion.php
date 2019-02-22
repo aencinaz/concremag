@@ -7,6 +7,27 @@ masa = document.form1.masa.value;
 alturah1 =document.form1.altura_h1.value;
 alturah2 =document.form1.altura_h2.value;
 
+
+a =parseFloat(document.form1.cal_a.value);
+c =parseFloat(document.form1.cal_b.value);
+simbolo1 =document.form1.cal_simbolo_1.value;
+simbolo2 =document.form1.cal_simbolo_2.value;  
+
+   
+if(simbolo2=="+")
+  {
+    cargamaxcorregida=(a*carga)+c;
+  }
+  else
+  {
+    cargamaxcorregida=(a*carga)-c;
+  }
+
+  
+cargamaxcorregida=cargamaxcorregida.toFixed(1);
+document.form1.carga_corregida.value=cargamaxcorregida;
+
+
       diametro=(parseFloat(d1) + parseFloat(d2))/2;
       altura=(parseFloat(alturah1) + parseFloat(alturah2))/2;
       aerea=((diametro/10)*(diametro/10)/4)*3.141516;
@@ -40,7 +61,7 @@ alturah2 =document.form1.altura_h2.value;
  <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Ensayo</h1>       
+          <h1><i class="fa fa-th-list"></i> Ensayo Hormigón</h1>       
           <p>Ficha de Ensayo Cilindro Compresión</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -271,10 +292,17 @@ alturah2 =document.form1.altura_h2.value;
         </div>
                                           
 
+
+                           <input name="cal_a"          type="hidden" id="cal_a" value="<?php echo $ensayo['cal_a']; ?>">
+                           <input name="cal_simbolo_1"  type="hidden" id="cal_simbolo_1" value="<?php echo $ensayo['cal_simbolo_1']; ?>">
+                           <input name="cal_simbolo_2"  type="hidden" id="cal_simbolo_2" value="<?php echo $ensayo['cal_simbolo_2']; ?>" >
+                           <input name="cla_b"          type="hidden" id="cal_b" value="<?php echo $ensayo['cal_b']; ?>"  >
+ 
+
                                           
          </div>
       </div>
-    </div>
+    </div> 
 
 
                                     

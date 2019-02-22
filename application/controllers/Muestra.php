@@ -58,7 +58,10 @@ class Muestra extends CI_Controller {
 		$data['ensayos']=$this->ensayo_model->get_ensayo_muestra($id);	
 		$data['pestana']=$muestra;
 		$this->load->view('header',$data);
-		$this->load->view('hormigon\ficha',$data);
+		if($data['muestra']['mue_elemento']=='hormigon')
+			$this->load->view('hormigon\ficha',$data);
+		else
+			$this->load->view('prefabricado\ficha',$data);	
 		$this->load->view('essential_js');
 		$this->load->view('footer');
 	}
@@ -91,22 +94,23 @@ class Muestra extends CI_Controller {
 		{
 
 						$this->load->view('header',$data);
+						$muestra=$data['muestra']['mue_elemento'];
 						switch ( $data['ensayo']['ens_tipo_probeta']) {
 							case 'Cilindro':
 								if($data['ensayo']['ens_ensaye']=='Compresión')
-										$this->load->view('hormigon\ensayo\cilindro_compresion',$data);
+										$this->load->view($muestra.'\ensayo\cilindro_compresion',$data);
 								else
-										$this->load->view('hormigon\ensayo\cilindro_hendimiento',$data);
+										$this->load->view($muestra.'\ensayo\cilindro_hendimiento',$data);
 								break;
 							case 'Cubo':
-										$this->load->view('hormigon\ensayo\cubo_compresion',$data);		
+										$this->load->view($muestra.'\ensayo\cubo_compresion',$data);		
 								break;
 							case 'Prisma':
-								$this->load->view('hormigon\ensayo\prisma_flexotraccion',$data);
+								$this->load->view($muestra.'\ensayo\prisma_flexotraccion',$data);
 							break;
 						}
 						$this->load->view('essential_js');
-						$this->load->view('hormigon\ensayo\specific_js');
+						$this->load->view($muestra.'\ensayo\specific_js');
 						$this->load->view('footer');
 		}
 		else
