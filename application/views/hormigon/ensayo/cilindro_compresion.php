@@ -30,10 +30,10 @@ document.form1.carga_corregida.value=cargamaxcorregida;
 
       diametro=(parseFloat(d1) + parseFloat(d2))/2;
       altura=(parseFloat(alturah1) + parseFloat(alturah2))/2;
-      aerea=((diametro/10)*(diametro/10)/4)*3.141516;
-      volumen=(aerea*altura)/10;
+      area=((diametro/10)*(diametro/10)/4)*3.141516;
+      volumen=(area*altura)/10;
       densidad=parseInt(masa)/parseInt(volumen);     
-      ResistenciaCilindricaMPA=((((parseFloat(carga)*1000))/(aerea*100)));
+      ResistenciaCilindricaMPA=((((parseFloat(carga)*1000))/(area*100)));
       ResistenciaCilindricaKGc2=ResistenciaCilindricaMPA.toFixed(1)*10;
 
 
@@ -49,7 +49,7 @@ document.form1.carga_corregida.value=cargamaxcorregida;
         ResistenciaCubicaKGc2=ResistenciaCubicaMPA.toFixed(1)*10;
          document.form1.resistencia_cubica.value = parseInt(ResistenciaCubicaKGc2);//kgc2
          document.form1.resistencia_mpa.value = ResistenciaCubicaMPA.toFixed(1);
-         document.form1.aerea.value = aerea.toFixed(2);
+         document.form1.area.value = area.toFixed(2);
          document.form1.volumen.value = parseInt(volumen);
          document.form1.densidad.value = densidad.toFixed(3);
          document.form1.ResistenciaCilindricaMPA.value = ResistenciaCilindricaMPA.toFixed(1);
@@ -217,7 +217,7 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                               <div class="form-group row">
                                                 <label for="example-url-input" class="col-sm-6 col-form-label">Area (mm2)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="aerea" autocomplete="off" value="<?php echo $ensayo['ens_area']; ?>"  class="form-control " type="text" >
+                                                  <input name="area" autocomplete="off" value="<?php echo $ensayo['ens_area']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
                                           
@@ -246,7 +246,10 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                                 <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cilindrica (MPa)</label>
                                                 <div class="col-sm-6">
                                                   <input name="ResistenciaCilindricaMPA" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_mpa']; ?>"  class="form-control " type="text" >
+                                                    <div class="form-control-feedback"> <?php echo form_error('ResistenciaCilindricaMPA'); ?> </div>
+                
                                                 </div>
+
                                               </div>
                                        <div class="form-group row">
                                                 <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cubica (kg/cm2)</label>
@@ -276,7 +279,9 @@ document.form1.carga_corregida.value=cargamaxcorregida;
            <select name="prensa"  id="primary" class="form-control" >
                   <option value=""></option>
                   <?php foreach ($prensas as $item): ?>
-                    <option value="<?php echo $item['pre_id']; ?>"><?php echo $item['pre_nombre']; ?></option>
+                    <option value="<?php echo $item['pre_id']; ?>" 
+                      <?php if($item['pre_id']==$ensayo['pre_id']){echo "selected";} ?>
+                      ><?php echo $item['pre_nombre']; ?></option>
                   <?php endforeach; ?>
                 </select>
             </div>
@@ -285,8 +290,8 @@ document.form1.carga_corregida.value=cargamaxcorregida;
 <div class="form-group row">
           <label for="example-url-input" class="col-sm-6 col-form-label">Calibración</label>
           <div class="col-sm-6">
-           <select name="cal_id"  id="secondary" class="form-control" >
-                   
+           <select name="cal_id"  id="secondary" class="form-control"  onchange='resistencia3(this)'>
+             <option selected="">test</option>
                 </select>
             </div>
         </div>

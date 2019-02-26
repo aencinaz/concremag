@@ -11,6 +11,8 @@ class ensayo_model extends CI_Model {
 			$this->db->select('*');
 			$this->db->from('ensayos');
 			$this->db->join('calibraciones', 'calibraciones.cal_id = ensayos.cal_id', 'left');
+			$this->db->join('prensas', 'prensas.pre_id = calibraciones.pre_id', 'left');
+			
 			$this->db->order_by("fecha_ensaye", "asc"); 
 			$query = $this->db->get();
 			return $query->result_array();
@@ -68,7 +70,7 @@ public function get_ensayo_muestra($id)
 				'ens_largo_h2' => $this->input->post('largo_h2'),
 				'ens_largo_h3' => $this->input->post('largo_h3'),
 				'ens_largo_h4' => $this->input->post('largo_h4'),
-				'ens_aerea' => $this->input->post('aerea'),
+				'ens_area' => $this->input->post('area'),
 				'ens_volumen' => $this->input->post('volumen'),
 				'ens_masa' => $this->input->post('masa'),
 				'ens_densidad' => $this->input->post('densidad'),
@@ -80,7 +82,8 @@ public function get_ensayo_muestra($id)
 				'ens_masa_sumergida' => $this->input->post('masa_sumergida'),
 				'ens_resistencia_cilindrica_mpa' => $this->input->post('ResistenciaCilindricaMPA'),
 				'ens_resistencia_cilindrica_kgc2' => $this->input->post('ResistenciaCilindricaKGc2'),
-				'ens_carga_corregida' => $this->input->post('carga_corregida')
+				'ens_carga_corregida' => $this->input->post('carga_corregida'),
+				'cal_id' => $this->input->post('cal_id')
 			);
 
 			$this->db->where('ens_id', $id);

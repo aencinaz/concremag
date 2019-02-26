@@ -14,6 +14,7 @@ $(function(){
           $('#cal_b').val(data[1]);
           $('#cal_simbolo_1').val(data[2]);
           $('#cal_simbolo_2').val(data[3]);
+          $(document).ready(resistencia3);
         });
           
     }
@@ -29,10 +30,12 @@ $(function(){
           $('#cal_b').val(data[1]);
           $('#cal_simbolo_1').val(data[2]);
           $('#cal_simbolo_2').val(data[3]);
+          $(document).ready(resistencia3);
         });
     }
     $('#secondary').change(fillSecondary);
     fillSecondary();
+
 });
 
 </script>

@@ -82,13 +82,11 @@ class Muestra extends CI_Controller {
 
 		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
-		
-		$data['prensas']=$this->prensa_model->get_prensa();	
-		
+		$data['prensas']=$this->prensa_model->get_prensa();		
 		$data['ensayo']=$this->ensayo_model->get_ensayo($id);	
 		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['mue_id']);	
 		
-		$this->form_validation->set_rules('ens_resistencia_mpa', 'resistencia_mpa', 'required');	
+		$this->form_validation->set_rules('ResistenciaCilindricaMPA', 'Resistencia', 'required');	
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -116,9 +114,9 @@ class Muestra extends CI_Controller {
 		else
 		{
 				if($this->ensayo_model->edit_ensayo($id))
-			 	redirect(base_url()."muestrahormigon/ficha/".$data['ensayo']['mue_id']."/ensayo/success", 'location');	
+			 	redirect(base_url()."muestra/ficha/".$data['ensayo']['mue_id']."/ensayo/success", 'location');	
 		else
-			 	redirect(base_url()."muestrahormigon/ficha/".$data['ensayo']['mue_id']."/ensayo/error", 'location');
+			 	redirect(base_url()."muestra/ficha/".$data['ensayo']['mue_id']."/ensayo/error", 'location');
 		}
 
 

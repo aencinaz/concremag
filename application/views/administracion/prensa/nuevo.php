@@ -27,7 +27,7 @@
 
 
                  <div class="form-group">
-                  <label class="control-label">Descripción</label>
+                  <label class="control-label">Fecha</label>
                   <input class="form-control" autocomplete="off" name="pre_fecha" type="date" placeholder="Ingrese Fecha de Calibración">
                   <div class="form-control-feedback"> <?php echo form_error('pre_fecha'); ?> </div>
                  
