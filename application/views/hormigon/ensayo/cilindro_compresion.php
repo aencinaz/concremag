@@ -110,9 +110,9 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                                 </div>
 
                                           <div class="form-group col">
-                                                 <label for="smFormGroupInput" class="row-sm">Fecha de Muestreo</label>
+                                                 <label for="smFormGroupInput" class="row-sm">Fecha de Ensayo</label>
                                                 <div class="row-sm">
-                                                  <input name="fecha_muestreo" autocomplete="off" value="<?php echo $muestra['mue_fecha_muestreo']; ?>" class="form-control " type="date" >
+                                                  <input name="ens_fecha_ensaye" autocomplete="off" value="<?php echo $ensayo['ens_fecha_ensaye']; ?>" class="form-control " type="date" >
                                                 </div>
                                           </div>
                                         </div>
@@ -276,13 +276,15 @@ document.form1.carga_corregida.value=cargamaxcorregida;
          <div class="form-group row">
           <label for="example-url-input" class="col-sm-6 col-form-label">Prensa</label>
           <div class="col-sm-6">
-           <select name="prensa"  id="primary" class="form-control" >
-                  <option value=""></option>
-                  <?php foreach ($prensas as $item): ?>
-                    <option value="<?php echo $item['pre_id']; ?>" 
-                      <?php if($item['pre_id']==$ensayo['pre_id']){echo "selected";} ?>
-                      ><?php echo $item['pre_nombre']; ?></option>
-                  <?php endforeach; ?>
+            <select name="prensa"  id="primary" class="form-control" >
+                  <?php foreach ($prensas as $item):
+                  if($ensayo['pre_id']==$item['pre_id']){ 
+                    echo "<option selected value=".$item['pre_id'].">".$item['pre_nombre']."</option>";
+                   }
+                  else{
+                    echo "<option value=".$item['pre_id'].">".$item['pre_nombre']."</option>";
+                   }
+                   endforeach; ?>
                 </select>
             </div>
         </div>
@@ -302,20 +304,11 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                            <input name="cal_simbolo_1"  type="hidden" id="cal_simbolo_1" value="<?php echo $ensayo['cal_simbolo_1']; ?>">
                            <input name="cal_simbolo_2"  type="hidden" id="cal_simbolo_2" value="<?php echo $ensayo['cal_simbolo_2']; ?>" >
                            <input name="cla_b"          type="hidden" id="cal_b" value="<?php echo $ensayo['cal_b']; ?>"  >
- 
+                           <input name="cal_id_h"         type="hidden" id="cal_id" value="<?php echo $ensayo['cal_id']; ?>"  >
 
-                                          
          </div>
       </div>
     </div> 
-
-
-                                    
-
-
-  
-      
-  
  <div class="tile-footer">
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="<?php echo base_url()."muestra/ficha/".$muestra['mue_id']."/ensayo" ?>"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancelar</a>
             </div>

@@ -86,7 +86,7 @@ class Muestra extends CI_Controller {
 		$data['ensayo']=$this->ensayo_model->get_ensayo($id);	
 		$data['muestra']=$this->muestra_model->get_muestra($data['ensayo']['mue_id']);	
 		
-		$this->form_validation->set_rules('ResistenciaCilindricaMPA', 'Resistencia', 'required');	
+		$this->form_validation->set_rules('ens_fecha_ensaye', 'ens_fecha_ensaye', 'required');	
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -258,7 +258,7 @@ class Muestra extends CI_Controller {
 			$row[] = $hormigon->obr_nombre;
 			$row[] = '<a href="'. base_url()."muestra/ficha/".$hormigon->mue_id.'/muestra">Ficha</a>';
 			$row[] = '<a href="'. base_url()."muestra/editar/".$hormigon->mue_id.'">editar</a>';
-			$row[] = '<a onclick="return confirmar()" href="'. base_url()."muestrahormigon/eliminar/".$hormigon->mue_id.'">Eliminar</a>';
+			$row[] = '<a onclick="return confirmar()" href="'. base_url()."muestra/eliminar/".$hormigon->mue_id.'">Eliminar</a>';
 			$data[] = $row;
 		}
 

@@ -87,7 +87,7 @@ document.form1.carga_corregida.value=cargamaxcorregida;
   <div class="container-fluid">
 
 <?php $attributes = array('id' => 'form1','name' => 'form1'); ?>            
-<?php echo form_open(base_url()."muestrahormigon/ensayo/".$ensayo['ens_id'],$attributes) ?> 
+<?php echo form_open(base_url()."muestra/ensayo/".$ensayo['ens_id'],$attributes) ?> 
                                     
 
                                      <div class="row">
@@ -95,7 +95,7 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                            <div class="form-group col">
                                                     <label for="smFormGroupInput" class="row-sm">Cliente</label>
                                                     <div class="row-sm">
-                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['cli_nombre']; ?>" type="text" class="form-control form-control-sm">
+                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['cli_nombre']; ?>" type="text" class="form-control ">
                                                     </div>
                                           </div>
 
@@ -103,21 +103,21 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                           <div class="form-group col">
                                                     <label for="smFormGroupInput" class="row-sm">Obra</label>
                                                     <div class="row-sm">
-                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['obr_nombre']; ?>" type="text" class="form-control form-control-sm">
+                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['obr_nombre']; ?>" type="text" class="form-control ">
                                                     </div>
                                           </div>
 
                                           <div class="form-group col">
                                                     <label for="smFormGroupInput" class="row-sm">Muestra N°</label>
                                                     <div class="row-sm">
-                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['mue_n_muestra']; ?>" type="text" class="form-control form-control-sm">
+                                                      <input name ="num_muestra" autocomplete="off" value="<?php echo $muestra['mue_n_muestra']; ?>" type="text" class="form-control ">
                                                     </div>
                                                 </div>
 
-                                          <div class="form-group col">
-                                                 <label for="smFormGroupInput" class="row-sm">Fecha de Muestreo</label>
+                                              <div class="form-group col">
+                                                 <label for="smFormGroupInput" class="row-sm">Fecha de Ensayo</label>
                                                 <div class="row-sm">
-                                                  <input name="fecha_muestreo" autocomplete="off" value="<?php echo $muestra['mue_fecha_muestreo']; ?>" class="form-control form-control-sm" type="date" >
+                                                  <input name="ens_fecha_ensaye" autocomplete="off" value="<?php echo $ensayo['ens_fecha_ensaye']; ?>" class="form-control " type="date" >
                                                 </div>
                                           </div>
                                         </div>
@@ -130,67 +130,67 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                           <div class="col-sm-6">
                                          
                                               <div class="form-group row">
-                                                <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Altura(h1)(mm)</label>
+                                                <label for="smFormGroupInput" class="col-sm-6 col-form-label">Altura(h1)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input  onkeyup='resistencia3(this)' name="altura_h1" autocomplete="off" value="<?php echo $ensayo['ens_altura_h1']; ?>" class="form-control form-control-sm form-control form-control-sm-sm" type="text"  >
+                                                  <input  onkeyup='resistencia3(this)' name="altura_h1" autocomplete="off" value="<?php echo $ensayo['ens_altura_h1']; ?>" class="form-control  form-control -sm" type="text"  >
                                                 </div>
                                               </div>
                                          
                                               <div class="form-group row">
-                                                 <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Altura(h2)(mm)</label>
+                                                 <label for="smFormGroupInput" class="col-sm-6 col-form-label">Altura(h2)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input  onkeyup='resistencia3(this)' name="altura_h2" autocomplete="off" value="<?php echo $ensayo['ens_altura_h2']; ?>" class="form-control form-control-sm" type="text"  >
+                                                  <input  onkeyup='resistencia3(this)' name="altura_h2" autocomplete="off" value="<?php echo $ensayo['ens_altura_h2']; ?>" class="form-control " type="text"  >
                                                 </div>
                                               </div>
 
 
                                               <div class="form-group row">
-                                                <label for="example-email-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Diametro(d1)(mm)</label>
+                                                <label for="example-email-input" class="col-sm-6 col-form-label">Diametro(d1)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input onkeyup='resistencia3(this)'  name="diametro_d1" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d1']; ?>" class="form-control form-control-sm" type="text" >
+                                                  <input onkeyup='resistencia3(this)'  name="diametro_d1" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d1']; ?>" class="form-control " type="text" >
                                                 </div>
                                               </div>
 
                                         
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Diametro(d2)(mm)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Diametro(d2)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input  onkeyup='resistencia3(this)' name="diametro_d2" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d2']; ?>" class="form-control form-control-sm" type="text">
+                                                  <input  onkeyup='resistencia3(this)' name="diametro_d2" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d2']; ?>" class="form-control " type="text">
                                                 </div>
                                               </div>
 
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Masa(g)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Masa(g)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="masa" autocomplete="off" value="<?php echo $ensayo['ens_masa']; ?>" class="form-control form-control-sm" type="text" >
+                                                  <input name="masa" autocomplete="off" value="<?php echo $ensayo['ens_masa']; ?>" class="form-control " type="text" >
                                                 </div>
                                               </div>
 
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Masa Sumergida(g)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Masa Sumergida(g)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="masa_sumergida" autocomplete="off" value="<?php echo $ensayo['ens_masa_sumergida']; ?>" class="form-control form-control-sm" type="text" >
-                                                </div>
-                                              </div>
-
-
-
-                                              <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Masa SSS</label>
-                                                <div class="col-sm-6">
-                                                  <input name="masasss" autocomplete="off" value="<?php echo $ensayo['ens_masa_sss']; ?>" class="form-control form-control-sm" type="text" >
+                                                  <input name="masa_sumergida" autocomplete="off" value="<?php echo $ensayo['ens_masa_sumergida']; ?>" class="form-control " type="text" >
                                                 </div>
                                               </div>
 
 
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Carga Máxima(Kg)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Masa SSS</label>
                                                 <div class="col-sm-6">
-                                                  <input name="carga_max" autocomplete="off" value="<?php echo $ensayo['ens_carga_max']; ?>" class="form-control form-control-sm" type="text" >
+                                                  <input name="masasss" autocomplete="off" value="<?php echo $ensayo['ens_masa_sss']; ?>" class="form-control " type="text" >
+                                                </div>
+                                              </div>
+
+
+
+                                              <div class="form-group row">
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Carga Máxima(Kg)</label>
+                                                <div class="col-sm-6">
+                                                  <input name="carga_max" autocomplete="off" value="<?php echo $ensayo['ens_carga_max']; ?>" class="form-control " type="text" >
                                                 </div>
                                               </div>
 
@@ -203,67 +203,67 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                        <div class="col-sm-6">
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Carga Máxima (Kn) corregida</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Carga Máxima (Kn) corregida</label>
                                                 <div class="col-sm-6">
-                                                  <input name="carga_corregida" autocomplete="off" value="<?php echo $ensayo['ens_carga_corregida']; ?>" class="form-control form-control-sm" type="text"  >
+                                                  <input name="carga_corregida" autocomplete="off" value="<?php echo $ensayo['ens_carga_corregida']; ?>" class="form-control " type="text"  >
                                                 </div>
                                               </div>
 
                                         
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Volumen (cm3)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Volumen (cm3)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="volumen" autocomplete="off" value="<?php echo $ensayo['ens_volumen']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="volumen" autocomplete="off" value="<?php echo $ensayo['ens_volumen']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
 
 
                                               <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Area (mm2)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Area (mm2)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="aerea" autocomplete="off" value="<?php echo $ensayo['ens_area']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="aerea" autocomplete="off" value="<?php echo $ensayo['ens_area']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
                                           
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Densidad (kg/m3)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Densidad (kg/m3)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="densidad" autocomplete="off" value="<?php echo $ensayo['ens_densidad']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="densidad" autocomplete="off" value="<?php echo $ensayo['ens_densidad']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
 
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Resistencia Cilindrica (kg/cm2)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cilindrica (kg/cm2)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="ResistenciaCilindricaKGc2" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_kgc2']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="ResistenciaCilindricaKGc2" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_kgc2']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
 
                                             <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Resistencia Cilindrica (MPa)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cilindrica (MPa)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="ResistenciaCilindricaMPA" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_mpa']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="ResistenciaCilindricaMPA" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_mpa']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Resistencia Cubica (kg/cm2)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cubica (kg/cm2)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="resistencia_cubica" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cubica']; ?>"  class="form-control form-control-sm" type="text" >
-                                                </div>
-                                              </div>
-
-                                       <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Resistencia Cubica (Mpa)</label>
-                                                <div class="col-sm-6">
-                                                  <input name="resistencia_mpa" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_mpa']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="resistencia_cubica" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cubica']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
 
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Observaciones</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cubica (Mpa)</label>
                                                 <div class="col-sm-6">
-                                                  <input name="observaciones" autocomplete="off" value="<?php echo $ensayo['ens_observaciones']; ?>"  class="form-control form-control-sm" type="text" >
+                                                  <input name="resistencia_mpa" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_mpa']; ?>"  class="form-control " type="text" >
+                                                </div>
+                                              </div>
+
+                                       <div class="form-group row">
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Observaciones</label>
+                                                <div class="col-sm-6">
+                                                  <input name="observaciones" autocomplete="off" value="<?php echo $ensayo['ens_observaciones']; ?>"  class="form-control " type="text" >
                                                 </div>
                                               </div>
 
@@ -273,11 +273,15 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                                  <div class="form-group row">
           <label for="example-url-input" class="col-sm-6 col-form-label">Prensa</label>
           <div class="col-sm-6">
-           <select name="prensa"  id="primary" class="form-control" >
-                  <option value=""></option>
-                  <?php foreach ($prensas as $item): ?>
-                    <option value="<?php echo $item['pre_id']; ?>"><?php echo $item['pre_nombre']; ?></option>
-                  <?php endforeach; ?>
+             <select name="prensa"  id="primary" class="form-control" >
+                  <?php foreach ($prensas as $item):
+                  if($ensayo['pre_id']==$item['pre_id']){ 
+                    echo "<option selected value=".$item['pre_id'].">".$item['pre_nombre']."</option>";
+                   }
+                  else{
+                    echo "<option value=".$item['pre_id'].">".$item['pre_nombre']."</option>";
+                   }
+                   endforeach; ?>
                 </select>
             </div>
         </div>
@@ -297,7 +301,8 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                            <input name="cal_simbolo_1"  type="hidden" id="cal_simbolo_1" value="<?php echo $ensayo['cal_simbolo_1']; ?>">
                            <input name="cal_simbolo_2"  type="hidden" id="cal_simbolo_2" value="<?php echo $ensayo['cal_simbolo_2']; ?>" >
                            <input name="cla_b"          type="hidden" id="cal_b" value="<?php echo $ensayo['cal_b']; ?>"  >
- 
+                               <input name="cal_id_h"         type="hidden" id="cal_id" value="<?php echo $ensayo['cal_id']; ?>"  >
+
 
                                           
 
