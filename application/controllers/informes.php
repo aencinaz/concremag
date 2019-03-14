@@ -7,10 +7,25 @@ class Muestra
 
     // Declaración de un método
     public function setEnsayo($ensayo) {
-        array_push($ensayos, $ensayo);
+        array_push($this->ensayos, $ensayo);
     }
-	
 
+	public function getEnsayoPrisma() {
+		$result= array();
+        foreach ($this->ensayos as $key ) {
+        	if($key['ens_tipo_probeta']=='Prisma')
+        	 array_push($result, $key);
+        }
+        return $result;
+    }
+    public function getEnsayoCilindro() {
+		$result= array();
+        foreach ($this->ensayos as $key ) {
+        	if($key['ens_tipo_probeta']=='Cilindro')
+        	 array_push($result, $key);
+        }
+        return $result;
+    }
 }
 
 class Informes extends CI_Controller {
@@ -42,13 +57,26 @@ class Informes extends CI_Controller {
 		else{
 						$this->load->model('informe_model');
 						$data['ensayos']=$this->informe_model->get_ensayos($this->input->post('obr_id'),$this->input->post('pla_id'));
-			
-$a = new Muestra();
-echo $a->mue_n_muestra;
+						//captura listado general de ensayos y se crean los objetos para ser almacenados en array de objetos
+						foreach ($data['ensayos'] as $key) {
+							if(!isset($muestras[$key['mue_n_muestra']]))	{		
+								$muestra = new Muestra();
+								$muestra->mue_n_muestra=$key['mue_n_muestra'];
+								$muestras[$key['mue_n_muestra']]=$muestra;
+							}
+						}
+						//se cargan los diferentes ensayos de las muestras en cada objeto
+						foreach ($muestras as $key ) {
+							$mue_n_muestra=$key->mue_n_muestra;
+							foreach ($data['ensayos'] as $ensayos) {
+								if($ensayos['mue_n_muestra']==$mue_n_muestra){
+									$key->setEnsayo($ensayos);
+								}
+							}
+						}
 
 
-			
-						exit();
+						
 
 					 // inicializamos la librería
 					        $this->load->library('PHPExcel.php');
@@ -65,6 +93,27 @@ echo $a->mue_n_muestra;
 					        // agregamos información a las celdas
 					        $this->phpexcel->setActiveSheetIndex(0)
 					            ->setCellValue('D7','OBRA');
+
+					            $i=14;
+					            foreach ($muestras as $key) {
+
+					         $this->phpexcel->setActiveSheetIndex(0)->setCellValue('C'.$i,$key->mue_n_muestra);
+
+	$cilindros=$key->getEnsayoCilindro();
+	$prismas=$key->getEnsayoPrisma();
+
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('j'.$i,$cilindros[0]['ens_resistencia_mpa']);
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('k'.$i,$cilindros[1]['ens_resistencia_mpa']);
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('l'.$i,$cilindros[2]['ens_resistencia_mpa']);
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('n'.$i,$prismas[0]['ens_resistencia_mpa']);
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('o'.$i,$prismas[1]['ens_resistencia_mpa']);
+  $this->phpexcel->setActiveSheetIndex(0)->setCellValue('p'.$i,$prismas[2]['ens_resistencia_mpa']);
+ 
+							//echo count($key->getEnsayoCilindro())."<br>";
+							# code...
+									$i++;
+								}
+					
 			
 			  		        // Renombramos la hoja de trabajo
 			    		    //    $this->phpexcel->getActiveSheet()->setTitle('CONCREMAG');         
