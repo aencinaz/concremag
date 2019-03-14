@@ -37,9 +37,15 @@
             <li><a class="treeview-item" href="<?php echo base_url();?>muestra/nuevo/prefabricado"><i class="icon fa fa-circle-o"></i> Ingresar Muestra Prefabricado</a></li>
         </ul>
       </li>
-      <li><a class="app-menu__item <?php if($selected=="prefabricado") echo "active"?>" href="<?php echo base_url();?>prefabricado\listar">   
-        <i class="app-menu__icon fa fa-calendar fa-lg"></i><span class="app-menu__label">Informes</span></a>
+
+        <li class="treeview"><a class="app-menu__item <?php if($selected=="Informes") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-archive fa-lg"></i><span class="app-menu__label">Informes</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu ">
+            <li><a class="treeview-item" href="<?php echo base_url();?>informes/evaluaciones"><i class="icon fa fa-circle-o"></i> Evaluación Estadística</a></li>
+          
+        </ul>
       </li>
+
+      <l
         <li class="treeview"><a class="app-menu__item <?php if($selected=="Administración") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-cog fa-lg"></i><span class="app-menu__label">Administración</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu ">
             <li><a class="treeview-item" href="<?php echo base_url();?>aditivo/listar"><i class="icon fa fa-circle-o"></i> Aditivos</a></li>
