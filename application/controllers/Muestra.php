@@ -292,10 +292,10 @@ class Muestra extends CI_Controller {
 
 	public function formulario($id)
 	{
+		$this->load->helper('url');
 		$this->load->model('ensayo_model');
 		$data['ensayos']=$this->ensayo_model->get_ensayo_muestra($id);	
 		
-
 		foreach ($data['ensayos'] as $ensayo ) {
 				
 				switch ( $ensayo['ens_tipo_probeta']) {
@@ -314,9 +314,16 @@ class Muestra extends CI_Controller {
 						}
 		}
 
+		
+
+		
+if(isset($cilindro_compresion))
 		$this->tabla($cilindro_compresion,'cilindro');
-		$this->tabla($cilindro_hendimiento,'hendimiento');
+if(isset($cilindro_hendimiento))
+	$this->tabla($cilindro_hendimiento,'hendimiento');
+if(isset($cubo_compresion))
 		$this->tabla($cubo_compresion,'cubo');
+if(isset($prisma_flexotraccion))
 		$this->tabla($prisma_flexotraccion,'flexo');
 		
 		
@@ -328,15 +335,17 @@ class Muestra extends CI_Controller {
 
 public function tabla($ensayo,$E)
 {
+
+
 $j=count($ensayo)/6;
 $x=0;
 $i=count($ensayo);
 if($i>0)
 {
+
 			while($j>0 )
 			{
-						
-				for ($i=0; $i <6 ; $i++) { 
+				for ($i; $i <6 ; $i++) { 
 					if(!isset($ensayo[$x+$i]['edad']))
 					{
 					    $ensayo[$x+$i]['mue_id']="";
@@ -346,10 +355,13 @@ if($i>0)
 						$ensayo[$x+$i]['ens_edad']="";
 					}
 				}
+			
+					
 							print '
 							
 							 
 							  <page>
+							  
 							<style type="text/css" >
 					<!--
 					.Estilo4 {
@@ -371,15 +383,12 @@ if($i>0)
 					
 							  <table>
 								<tr>
-								  <td width="135"  height="76"><img src="img/vilicic.jpg" width="115" height="27" /></td>
+								  <td width="135"  height="76"><img src="'.base_url().'assets/img/vilicic.png" width="115" height="27" /></td>
 									<td  width="310">&nbsp;</td>
 									<td  width="204">
 											<table width="210" border="1" cellspacing="0" cellpadding="0">
 													 <tr>
-														  <th scope="col"><span class="Estilo34">';
-														
-														  print '</span></th>
-														   <th scope="col"><span class="Estilo34"></span></th>
+														   <th scope="col"><span class="Estilo34">L-CV-FREH-01 Versión: 04</span></th>
 													 </tr>
 											</table>
 									 </td>
