@@ -37,7 +37,6 @@
              <th scope="col">Cliente</th>
 			       <th scope="col">Obra</th>
 			      <th scope="col">Ficha</th> 
-			      <th scope="col">Editar</th>
 			      <th scope="col">Eliminar</th>
 			    </tr>
 			  </thead>

@@ -100,7 +100,7 @@
                                               <div class="form-group row">
                                                  <label for="smFormGroupInput" class="col-sm-6 col-form-label">Fecha de Ingreso</label>
                                                 <div class="col-sm-6">
-                                                  <input name="fecha_ingreso_lab" autocomplete="off" value="<?php echo $muestra['mue_fecha_ingreso']; ?>" class="form-control" type="date"  >
+                                                  <input name="fecha_ingreso_lab" autocomplete="off" value="<?php echo $muestra['mue_fecha_ingreso_lab']; ?>" class="form-control" type="date"  >
                                                 </div>
                                               </div>
 
@@ -257,6 +257,7 @@
 
                                           <div class="row d-print-none mt-2">
                 <div class="col-12 text-right">
+                    <a class="btn btn-primary" href="<?php echo base_url().'muestra/editar/'.$muestra['mue_id'];?>" target="_blank"><i class="fa fa-save"></i> Guardar Cambios</a>
                     <a class="btn btn-primary" href="<?php echo base_url().'muestra/formulario/'.$muestra['mue_id']; ?>" target="_blank"><i class="fa fa-print"></i> Formulario de Ensaye</a>
                 </div>
               </div>
@@ -287,7 +288,8 @@
                     <?php $i=1; foreach ($ensayos as $ensayo_item): ?>
                     <tr>
                       <th scope="row"><?php echo $i; ?></th>
-                      <td><?php echo $ensayo_item['ens_fecha_ensaye']; ?></td>
+                   
+                      <td><?php echo date("d-m-Y",strtotime($ensayo_item['ens_fecha_ensaye'])); ?></td>
                       <td><?php echo $ensayo_item['ens_edad']; ?></td>
                       <td><?php echo $ensayo_item['ens_tipo_probeta']; ?></td>
                       <td><?php echo $ensayo_item['ens_ensaye']; ?></td>

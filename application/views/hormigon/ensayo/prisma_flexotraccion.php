@@ -1,21 +1,22 @@
   <script language="javascript" type="text/javascript">   
-  function resistencia3(f) {   
-d1 = document.form1.diametro_d1.value;
-d2 = document.form1.diametro_d2.value;
+
+function resistencia3(f) {  
+
+anchob1 = document.form1.ancho_b1.value;
+anchob2 = document.form1.ancho_b2.value;
 carga = document.form1.carga_max.value;
 masa = document.form1.masa.value;
 alturah1 =document.form1.altura_h1.value;
 alturah2 =document.form1.altura_h2.value;
-
-
-
+largo=document.form1.largo_h1.value;
 
 a =parseFloat(document.form1.cal_a.value);
 c =parseFloat(document.form1.cal_b.value);
+
 simbolo1 =document.form1.cal_simbolo_1.value;
 simbolo2 =document.form1.cal_simbolo_2.value;  
 
-   
+
 if(simbolo2=="+")
   {
     cargamaxcorregida=(a*carga)+c;
@@ -24,45 +25,37 @@ if(simbolo2=="+")
   {
     cargamaxcorregida=(a*carga)-c;
   }
-
   
-cargamaxcorregida=cargamaxcorregida.toFixed(1);
-document.form1.carga_corregida.value=cargamaxcorregida;
+  cargamaxcorregida=Math.round(cargamaxcorregida);
+  document.form1.carga_corregida.value=cargamaxcorregida;
+  carga=cargamaxcorregida;
 
 
-
-      diametro=(parseFloat(d1) + parseFloat(d2))/2;
+      ancho=(parseFloat(anchob1) + parseFloat(anchob2))/2;
+      
+    //  document.form1.observaciones.value = largo;
+      
       altura=(parseFloat(alturah1) + parseFloat(alturah2))/2;
-      aerea=((diametro/10)*(diametro/10)/4)*3.141516;
-      volumen=(aerea*altura)/10;
-      densidad=parseInt(masa)/parseInt(volumen);     
-      ResistenciaCilindricaMPA=((((parseFloat(carga)*1000))/(aerea*100)));
-      ResistenciaCilindricaKGc2=ResistenciaCilindricaMPA.toFixed(1)*10;
+      aerea=(ancho*(altura*altura));
+      volumen=(ancho*altura*(parseFloat(largo)))/100;
+      densidad=(parseInt(masa)/volumen)*1000;
+      luz=altura.toFixed(0)*3;
 
-    
-      if( ResistenciaCilindricaMPA.toFixed(1) >= 20 ) {
+      resistenciampa=((parseFloat(carga)*1000))*luz/aerea;
+      Resistenciaflexo=resistenciampa.toFixed(1)*10;
+      aerea=aerea/1000; 
+      
+        //document.form1.observaciones.value = ResistenciaCilindrica;
+        document.form1.resistencia_cubica.value = Resistenciaflexo.toFixed(0);
+         document.form1.resistencia_mpa.value = resistenciampa.toFixed(1);
+         document.form1.aerea.value = aerea.toFixed(0);
+         document.form1.volumen.value = volumen.toFixed(0);
+         document.form1.densidad.value = densidad.toFixed(0);
+         document.form1.ens_luz.value = luz;
          
-         ResistenciaCubicaMPA = ResistenciaCilindricaMPA + 5;
-         
-         }
-         else{
-                 ResistenciaCubicaMPA= ResistenciaCilindricaMPA * 1.25;
-        }
-        
-        ResistenciaCubicaKGc2=ResistenciaCubicaMPA.toFixed(1)*10;
-
-         document.form1.resistencia_cubica.value = parseInt(ResistenciaCubicaKGc2);//kgc2
-         document.form1.resistencia_mpa.value = ResistenciaCubicaMPA.toFixed(1);
-         document.form1.aerea.value = aerea.toFixed(2);
-         document.form1.volumen.value = parseInt(volumen);
-         document.form1.densidad.value = densidad.toFixed(3);
-
-         document.form1.ResistenciaCilindricaMPA.value = ResistenciaCilindricaMPA.toFixed(1);
-         document.form1.ResistenciaCilindricaKGc2.value = ResistenciaCilindricaKGc2.toFixed(0);      
+      
    }
-
-</script> 
-
+</script>
  <main class="app-content">
       <div class="app-title">
         <div>
@@ -145,20 +138,27 @@ document.form1.carga_corregida.value=cargamaxcorregida;
 
 
                                               <div class="form-group row">
-                                                <label for="example-email-input" class="col-sm-6 col-form-label">Diametro(d1)(mm)</label>
+                                                <label for="example-email-input" class="col-sm-6 col-form-label">Ancho (b1)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input onkeyup='resistencia3(this)'  name="diametro_d1" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d1']; ?>" class="form-control" type="text" >
+                                                  <input onkeyup='resistencia3(this)'  name="ancho_b1" autocomplete="off" value="<?php echo $ensayo['ens_ancho_b1']; ?>" class="form-control" type="text" >
                                                 </div>
                                               </div>
 
                                         
 
                                               <div class="form-group row">
-                                                <label for="example-time-input" class="col-sm-6 col-form-label">Diametro(d2)(mm)</label>
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Ancho (b2)(mm)</label>
                                                 <div class="col-sm-6">
-                                                  <input  onkeyup='resistencia3(this)' name="diametro_d2" autocomplete="off" value="<?php echo $ensayo['ens_diametro_d2']; ?>" class="form-control" type="text">
+                                                  <input  onkeyup='resistencia3(this)' name="ancho_b2" autocomplete="off" value="<?php echo $ensayo['ens_ancho_b2']; ?>" class="form-control" type="text">
                                                 </div>
                                               </div>
+                                            <div class="form-group row">
+                                                <label for="example-time-input" class="col-sm-6 col-form-label">Largo Probeta(cm)</label>
+                                                <div class="col-sm-6">
+                                                  <input name="largo_h1" autocomplete="off" value="<?php echo $ensayo['ens_largo_h1']; ?>" class="form-control" type="text" >
+                                                </div>
+                                              </div>
+
 
 
                                               <div class="form-group row">
@@ -185,8 +185,14 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                                 </div>
                                               </div>
 
+                                                 <div class="form-group row">
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Luz</label>
+                                                <div class="col-sm-6">
+                                                  <input name="ens_luz" autocomplete="off" value="<?php echo $ensayo['ens_luz']; ?>"  class="form-control" type="text" >
+                                                </div>
+                                              </div>
 
-
+                                           
                                               <div class="form-group row">
                                                 <label for="example-time-input" class="col-sm-6 col-form-label">Carga Máxima(Kg)</label>
                                                 <div class="col-sm-6">
@@ -233,32 +239,22 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                                                 </div>
                                               </div>
 
+                                      
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cilindrica (kg/cm2)</label>
-                                                <div class="col-sm-6">
-                                                  <input name="ResistenciaCilindricaKGc2" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_kgc2']; ?>"  class="form-control" type="text" >
-                                                </div>
-                                              </div>
-
-                                            <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cilindrica (MPa)</label>
-                                                <div class="col-sm-6">
-                                                  <input name="ResistenciaCilindricaMPA" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cilindrica_mpa']; ?>"  class="form-control" type="text" >
-                                                </div>
-                                              </div>
-                                       <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cubica (kg/cm2)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Flexotracción (kg/cm2)</label>
                                                 <div class="col-sm-6">
                                                   <input name="resistencia_cubica" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_cubica']; ?>"  class="form-control" type="text" >
                                                 </div>
                                               </div>
 
                                        <div class="form-group row">
-                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Cubica (Mpa)</label>
+                                                <label for="example-url-input" class="col-sm-6 col-form-label">Resistencia Flexotracción (Mpa)</label>
                                                 <div class="col-sm-6">
                                                   <input name="resistencia_mpa" autocomplete="off" value="<?php echo $ensayo['ens_resistencia_mpa']; ?>"  class="form-control" type="text" >
                                                 </div>
                                               </div>
+
+
 
                                        <div class="form-group row">
                                                 <label for="example-url-input" class="col-sm-6 col-form-label">Observaciones</label>
@@ -288,7 +284,6 @@ document.form1.carga_corregida.value=cargamaxcorregida;
           <label for="example-url-input" class="col-sm-6 col-form-label">Calibración</label>
           <div class="col-sm-6">
            <select name="cal_id"  id="secondary" class="form-control" >
-                   
                 </select>
             </div>
         </div>
@@ -299,7 +294,7 @@ document.form1.carga_corregida.value=cargamaxcorregida;
                            <input name="cal_simbolo_1"  type="hidden" id="cal_simbolo_1" value="<?php echo $ensayo['cal_simbolo_1']; ?>">
                            <input name="cal_simbolo_2"  type="hidden" id="cal_simbolo_2" value="<?php echo $ensayo['cal_simbolo_2']; ?>" >
                            <input name="cla_b"          type="hidden" id="cal_b" value="<?php echo $ensayo['cal_b']; ?>"  >
-                             <input name="cal_id_h"         type="hidden" id="cal_id" value="<?php echo $ensayo['cal_id']; ?>"  >
+                           <input name="cal_id_h"         type="hidden" id="cal_id" value="<?php echo $ensayo['cal_id']; ?>"  >
         </div>
       </div>
     </div>

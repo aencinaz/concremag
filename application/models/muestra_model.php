@@ -42,12 +42,30 @@ class muestra_model extends CI_Model {
 	public function set_muestra($mue_elemento)
 	{
 
-		$data = array('mue_id' => $this->input->post('mue_id'),
+			$pla_id=$this->input->post('pla_id');
+			$adi_id=$this->input->post('adi_id');
+			$cam_id=$this->input->post('cam_id');
+			$hor_id=$this->input->post('hor_id');
+			$cem_id=$this->input->post('cem_id');
+
+			if($pla_id=='')
+				$pla_id = null;
+            if($adi_id=='')
+				$adi_id = null;
+			if($cam_id =='')
+				$cam_id = null;
+			if($hor_id=='')
+				$hor_id = null;
+			if($cem_id=='')
+				$cem_id = null;
+
+
+		$data = array(
 				'mue_elemento' => $mue_elemento,
 				'obr_id' => $this->input->post('obr_id'),
 				'mue_ubicacion' => $this->input->post('ubicacion'),
 				'mue_n_muestra' => $this->input->post('num_muestra'),
-				'mue_fecha_muestreo' => $this->input->post('mue_fecha_muestreo'),
+				'mue_fecha_muestreo' => $this->input->post('fecha_muestreo'),
 				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),	
 				'mue_elemento_hormigonado' => $this->input->post('elemen_hormi'),
 				'mue_guia' => $this->input->post('guia'),
@@ -55,20 +73,21 @@ class muestra_model extends CI_Model {
 				'mue_temperatura_ambiente' => $this->input->post('t_ambiente'),
 				'mue_numero_camion' => $this->input->post('num_camion'),
 				'mue_hora_obra' => $this->input->post('h_obra'),
-				'pla_id' => $this->input->post('pla_id'),
+				'pla_id' => $pla_id,
 				'mue_cntm3' => $this->input->post('cntm3'),
 				'mue_hora_descarga' => $this->input->post('h_descarga'),
 				'mue_temperatura_hormigon' => $this->input->post('t_hormigon'),
 				'mue_aire' => $this->input->post('aire'),
 				'mue_hora_muestreo' => $this->input->post('h_muestreo'),
 				'mue_asentamiento_cono' => $this->input->post('asentamiento'),
-				'adi_id' => $this->input->post('adi_id'),
 				'mue_compactacion' => $this->input->post('compactacion'),
-				'cam_id' => $this->input->post('camion'),
-				'hor_id' => $this->input->post('hor_id'),
+				'cam_id' => $cam_id,
+				'hor_id' => $hor_id,
 				'mue_observaciones' => $this->input->post('observaciones'),
-				'cem_id' => $this->input->post('id_cemento')
+				'adi_id' => $adi_id,
+				'cem_id' => $cem_id
 			);
+		
 		return $this->db->insert('MUESTRAS', $data);
 	}	
 	public function edit_muestra($id)
@@ -108,7 +127,7 @@ class muestra_model extends CI_Model {
 
 	public function del_muestra($id)
 	{
-		$this->db->where('id_muestra', $id);
+		$this->db->where('mue_id', $id);
 		return $this->db->delete('MUESTRAS');
 	}
 

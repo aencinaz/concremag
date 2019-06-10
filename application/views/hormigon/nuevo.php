@@ -34,7 +34,7 @@
      <div class="form-group row">
           <label for="example-url-input" class="col-sm-2  col-form-label-sm col-form-label-sm-sm">Cliente</label>
           <div class="col-sm-10">
-           <select name="cli_id" id="primary" class="form-control form-control-sm" >
+           <select name="cli_id" id="primary" class="form-control" >
               <option value=""></option>
                 <?php foreach ($clientes as $cliente_item): ?>
               <option value="<?php echo $cliente_item['cli_id']; ?>" <?php echo set_select('cli_id',$cliente_item['cli_id']); ?> ><?php echo $cliente_item['cli_nombre']; ?></option>
@@ -48,7 +48,7 @@
       <div class="form-group row">
           <label for="example-url-input" class="col-sm-2 col-form-label-sm col-form-label-sm-sm">Obra</label>
           <div class="col-sm-10">
-           <select name="obr_id" id="secondary" class="form-control form-control-sm" >
+           <select name="obr_id" id="secondary" class="form-control" >
             </select>
           </div>
         </div>
@@ -58,52 +58,52 @@
   <div class="row">
     <div class="col-sm-4">
           <div class="form-group row">
-              <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Muestra N°</label>
-              <div class="col-sm-6">
-                <input name ="num_muestra" autocomplete="off" value="<?php echo set_value('num_muestra'); ?>" type="text" class="form-control form-control-sm form-control form-control-sm-sm">
+              <label for="smFormGroupInput" class="col-sm">Muestra N°</label>
+              <div class="col-sm">
+                <input name ="num_muestra" autocomplete="off" value="<?php echo set_value('num_muestra'); ?>" type="text" class="form-control">
               </div>
             </div>
         <div class="form-group row">
-          <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Guia de Despacho</label>
-          <div class="col-sm-6">
-            <input name="guia" autocomplete="off" value="<?php echo set_value('guia'); ?>" class="form-control form-control-sm form-control form-control-sm-sm" type="text"  >
+          <label for="smFormGroupInput" class="col-sm">Guia de Despacho</label>
+          <div class="col-sm">
+            <input name="guia" autocomplete="off" value="<?php echo set_value('guia'); ?>" class="form-control" type="text"  >
           </div>
         </div>
         <div class="form-group row">
-           <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Fecha de Muestreo</label>
-          <div class="col-sm-6">
-            <input name="fecha_muestreo" autocomplete="off" value="<?php echo set_value('fecha_muestreo'); ?>" class="form-control form-control-sm" type="date" >
+           <label for="smFormGroupInput" class="col-sm">Fecha de Muestreo</label>
+          <div class="col-sm">
+            <input name="fecha_muestreo" autocomplete="off" value="<?php echo set_value('fecha_muestreo'); ?>" class="form-control" type="date" >
           </div>
         </div>
         <div class="form-group row">
-           <label for="smFormGroupInput" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Fecha de Ingreso</label>
-          <div class="col-sm-6">
-            <input name="fecha_ingreso_lab" autocomplete="off" value="<?php echo set_value('fecha_ingreso_lab'); ?>" class="form-control form-control-sm" type="date"  >
+           <label for="smFormGroupInput" class="col-sm">Fecha de Ingreso</label>
+          <div class="col-sm">
+            <input name="fecha_ingreso_lab" autocomplete="off" value="<?php echo set_value('fecha_ingreso_lab'); ?>" class="form-control" type="date"  >
           </div>
         </div>
 
 
         <div class="form-group row">
-          <label for="example-email-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Asentamiento Cono</label>
-          <div class="col-sm-6">
-            <input name="asentamiento" autocomplete="off" value="<?php echo set_value('asentamiento'); ?>" class="form-control form-control-sm" type="text" >
+          <label for="example-email-input" class="col-sm">Asentamiento Cono</label>
+          <div class="col-sm">
+            <input name="asentamiento" autocomplete="off" value="<?php echo set_value('asentamiento'); ?>" class="form-control" type="text" >
           </div>
         </div>
 
   
 
         <div class="form-group row">
-          <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Hora salida Panta</label>
-          <div class="col-sm-6">
-            <input name="h_planta" autocomplete="off" value="<?php echo set_value('h_planta'); ?>" class="form-control form-control-sm" type="time">
+          <label for="example-time-input" class="col-sm">Hora salida Panta</label>
+          <div class="col-sm">
+            <input name="h_planta" autocomplete="off" value="<?php echo set_value('h_planta'); ?>" class="form-control" type="time">
           </div>
         </div>
 
 
         <div class="form-group row">
-          <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Hora LLegada Obra</label>
-          <div class="col-sm-6">
-            <input name="h_obra" autocomplete="off" value="<?php echo set_value('h_obra'); ?>" class="form-control form-control-sm" type="time" >
+          <label for="example-time-input" class="col-sm">Hora LLegada Obra</label>
+          <div class="col-sm">
+            <input name="h_obra" autocomplete="off" value="<?php echo set_value('h_obra'); ?>" class="form-control" type="time" >
           </div>
         </div>
 
@@ -111,27 +111,28 @@
  <div class="col-sm-4">
 
         <div class="form-group row">
-          <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Hora Inicio Descarga</label>
-          <div class="col-sm-6">
-            <input name="h_descarga" autocomplete="off" value="<?php echo set_value('h_descarga'); ?>" class="form-control form-control-sm" type="time"  >
+          <label for="example-time-input" class="col-sm">Hora Inicio Descarga</label>
+          <div class="col-sm">
+            <input name="h_descarga" autocomplete="off" value="<?php echo set_value('h_descarga'); ?>" class="form-control" type="time"  >
           </div>
         </div>
 
   
 
         <div class="form-group row">
-          <label for="example-time-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Hora Muestreo</label>
-          <div class="col-sm-6">
-            <input name="h_muestreo" autocomplete="off" value="<?php echo set_value('h_muestreo'); ?>"  class="form-control form-control-sm" type="time" >
+          <label for="example-time-input" class="col-sm">Hora Muestreo</label>
+          <div class="col-sm">
+            <input name="h_muestreo" autocomplete="off" value="<?php echo set_value('h_muestreo'); ?>"  class="form-control" type="time" >
           </div>
         </div>
 
 
         <div class="form-group row">
-          <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Aditivos</label>
-          <div class="col-sm-6">
-           <select name="hormigon_grado" class="form-control form-control-sm" >
+          <label for="example-url-input" class="col-sm">Aditivos</label>
+          <div class="col-sm">
+           <select name="adi_id" class="form-control" >
                     <?php foreach ($aditivos as $aditivos_item): ?>
+                          <option value=""></option>
                   <option value="<?php echo $aditivos_item['adi_id']; ?>"><?php echo $aditivos_item['adi_nombre']; ?></option>
                   <?php endforeach; ?>
                 </select>
@@ -139,9 +140,9 @@
         </div>
     
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Hormigón Grado</label>
-              <div class="col-sm-6">
-               <select name="hormigon_grado" class="form-control form-control-sm" >
+              <label for="example-url-input" class="col-sm">Hormigón Grado</label>
+              <div class="col-sm">
+               <select name="hor_id" class="form-control" >
                     <?php foreach ($hormigones as $hormigon_item): ?>
                   <option value=""></option>
                   <option value="<?php echo $hormigon_item['hor_id']; ?>"><?php echo $hormigon_item['hor_nombre']; ?></option>
@@ -151,21 +152,21 @@
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Compactación</label>
-              <div class="col-sm-6">
-                <select name="compactacion" class="form-control form-control-sm">
+              <label for="example-url-input" class="col-sm">Compactación</label>
+              <div class="col-sm">
+                <select name="compactacion" class="form-control">
                        <option value=""></option>
              
-                  <option value="1" <?php echo set_select('compactacion',1); ?>  >Mecánica</option>
-                  <option value="2" <?php echo set_select('compactacion',2); ?>  >Manual</option>
+                  <option value="Mecánica" <?php echo set_select('compactacion','Mecánica'); ?>  >Mecánica</option>
+                  <option value="Manual" <?php echo set_select('compactacion','Manual'); ?>  >Manual</option>
                 </select>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Tipo de Camión</label>
-              <div class="col-sm-6">
-                 <select name="cam_id" class="form-control form-control-sm" >
+              <label for="example-url-input" class="col-sm">Tipo de Camión</label>
+              <div class="col-sm">
+                 <select name="cam_id" class="form-control" >
                     <?php foreach ($camiones as $camion_item): ?>
                            <option value=""></option>
                   <option value="<?php echo $camion_item['cam_id']; ?>" <?php echo set_select('cam_id',$camion_item['cam_id']); ?>  ><?php echo $camion_item['cam_nombre']; ?></option>
@@ -175,9 +176,9 @@
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Panta</label>
-              <div class="col-sm-6">
-                <select name="pla_id" class="form-control form-control-sm" >
+              <label for="example-url-input" class="col-sm">Panta</label>
+              <div class="col-sm">
+                <select name="pla_id" class="form-control" >
                     <?php foreach ($plantas as $planta_item): ?>
                            <option value=""></option>
                   <option value="<?php echo $planta_item['pla_id']; ?>" <?php echo set_select('pla_id',$planta_item['pla_id']); ?>  ><?php echo $planta_item['pla_nombre']; ?></option>
@@ -187,9 +188,9 @@
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Cemento</label>
-              <div class="col-sm-6">
-                 <select name="cem_id" class="form-control form-control-sm" >
+              <label for="example-url-input" class="col-sm">Cemento</label>
+              <div class="col-sm">
+                 <select name="cem_id" class="form-control" >
                     <?php foreach ($cementos as $cemento_item): ?>
                            <option value=""></option>
 
@@ -204,60 +205,60 @@
   
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Camión N°</label>
-              <div class="col-sm-6">
-                <input name="num_camion" autocomplete="off" value="<?php echo set_value('num_camion'); ?>" class="form-control form-control-sm" type="text" >
+              <label for="example-url-input" class="col-sm">Camión N°</label>
+              <div class="col-sm">
+                <input name="num_camion" autocomplete="off" value="<?php echo set_value('num_camion'); ?>" class="form-control" type="text" >
               </div>
             </div>
 
 
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Cantidad M3</label>
-              <div class="col-sm-6">
-                <input name="cntm3" autocomplete="off" value="<?php echo set_value('cntm3'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">Cantidad M3</label>
+              <div class="col-sm">
+                <input name="cntm3" autocomplete="off" value="<?php echo set_value('cntm3'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Aire</label>
-              <div class="col-sm-6">
-                <input name="aire" autocomplete="off" value="<?php echo set_value('aire'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">Aire</label>
+              <div class="col-sm">
+                <input name="aire" autocomplete="off" value="<?php echo set_value('aire'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">T° Ambiente</label>
-              <div class="col-sm-6">
-                <input name="t_ambiente" autocomplete="off" value="<?php echo set_value('t_ambiente'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">T° Ambiente</label>
+              <div class="col-sm">
+                <input name="t_ambiente" autocomplete="off" value="<?php echo set_value('t_ambiente'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">T° Hormigón</label>
-              <div class="col-sm-6">
-                <input name="t_hormigon" autocomplete="off" value="<?php echo set_value('t_hormigon'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">T° Hormigón</label>
+              <div class="col-sm">
+                <input name="t_hormigon" autocomplete="off" value="<?php echo set_value('t_hormigon'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Elemento Hormigonado</label>
-              <div class="col-sm-6">
-                <input name="elemen_hormi" autocomplete="off" value="<?php echo set_value('elemen_hormi'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">Elemento Hormigonado</label>
+              <div class="col-sm">
+                <input name="elemen_hormi" autocomplete="off" value="<?php echo set_value('elemen_hormi'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Ubicación</label>
-              <div class="col-sm-6">
-                <input name="ubicacion" autocomplete="off" value="<?php echo set_value('ubicacion'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">Ubicación</label>
+              <div class="col-sm">
+                <input name="ubicacion" autocomplete="off" value="<?php echo set_value('ubicacion'); ?>" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="example-url-input" class="col-sm-6 col-form-label-sm col-form-label-sm-sm">Observaciones</label>
-              <div class="col-sm-6">
-                <input name="observaciones" autocomplete="off" value="<?php echo set_value('observaciones'); ?>" class="form-control form-control-sm" type="text">
+              <label for="example-url-input" class="col-sm">Observaciones</label>
+              <div class="col-sm">
+                <input name="observaciones" autocomplete="off" value="<?php echo set_value('observaciones'); ?>" class="form-control" type="text">
               </div>
             </div>
     </div>
@@ -280,7 +281,6 @@
                       <td>
 
                              <select name="ensayo[]" class="custom-select">
-                                <option selected>Seleccione...</option>
                                 <option value="1">Cilindro Compresión</option>
                                 <option value="2">Cilindro Hendimiento</option>
                                 <option value="3">Cubo Compresión</option>

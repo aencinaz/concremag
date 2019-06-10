@@ -14,7 +14,7 @@ $(function(){
 });
 $(document).ready(function(){
     $("a").click(function(){
-       $('#tabla > tbody:last').append('<tr><td><select name="ensayo[]" class="custom-select"><option selected>Seleccione...</option><option value="1">Cilindro Compresión</option><option value="2">Cilindro Hendimiento</option><option value="3">Cubo Compresión</option><option value="4">Prisma Flexotracción</option></select></td><td><input  autocomplete="off" name="edad[]"      type="number" type="text" class="form-control "></td><td><input  autocomplete="off" name="cantidad[]"  type="number" type="text" class="form-control "></td><td></td></tr>');
+       $('#tabla > tbody:last').append('<tr><td><select name="ensayo[]" class="custom-select"><option value="1">Cilindro Compresión</option><option value="2">Cilindro Hendimiento</option><option value="3">Cubo Compresión</option><option value="4">Prisma Flexotracción</option></select></td><td><input  autocomplete="off" name="edad[]"      type="number" type="text" class="form-control "></td><td><input  autocomplete="off" name="cantidad[]"  type="number" type="text" class="form-control "></td><td></td></tr>');
 
 });
     });

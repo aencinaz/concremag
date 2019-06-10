@@ -60,13 +60,13 @@
           <div class="form-group row">
               <label for="smFormGroupInput" class="col-sm-6 form-label">Muestra N°</label>
               <div class="col-sm-6">
-                <input name ="num_muestra" autocomplete="off" value="<?php echo set_value('num_muestra'); ?>" type="text" class="form-control form-control-sm">
+                <input name ="num_muestra" autocomplete="off" value="<?php echo set_value('num_muestra'); ?>" type="text" class="form-control">
               </div>
             </div>
         <div class="form-group row">
           <label for="smFormGroupInput" class="col-sm-6 form-label">Guia de Despacho</label>
           <div class="col-sm-6">
-            <input name="guia" autocomplete="off" value="<?php echo set_value('guia'); ?>" class="form-control form-control-sm" type="text"  >
+            <input name="guia" autocomplete="off" value="<?php echo set_value('guia'); ?>" class="form-control" type="text"  >
           </div>
         </div>
          <div class="form-group row">

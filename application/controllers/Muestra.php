@@ -130,7 +130,6 @@ class Muestra extends CI_Controller {
 	{
 		
 		$this->load->helper('url');
-		$this->load->library('form_validation');
 		$this->load->helper('url_helper');
 
 		$this->load->model('muestra_model');
@@ -160,20 +159,24 @@ class Muestra extends CI_Controller {
 		$this->load->model('cemento_model');
 		$this->load->model('ensayo_model');
 		$this->load->model('camion_model');
+		$this->load->model('aditivo_model');
 
 		$data['clientes']=$this->cliente_model->get_cliente();	
 		$data['hormigones']=$this->hormigon_model->get_hormigon();	
 		$data['plantas']=$this->planta_model->get_planta();	
 		$data['cementos']=$this->cemento_model->get_cemento();	
 		$data['camiones']=$this->camion_model->get_camion();	
+		$data['aditivos']=$this->aditivo_model->get_aditivo();	
 			
 		$data['selected']="Muestras";
 		$data['link_selected']="Nuevo";
 
-		$this->form_validation->set_rules('num_muestra', 'Numero de Muestra', 'required');
+		$this->form_validation->set_rules('num_muestra', 'Numero de Muestra', 'required|is_unique[muestras.mue_n_muestra]');
 		$this->form_validation->set_rules('fecha_muestreo', 'fecha de Muestra', 'required');
 		$this->form_validation->set_rules('obr_id', 'Obra', 'required');
 		$this->form_validation->set_rules('cli_id', 'Cliente', 'required');
+		$this->form_validation->set_rules('edad[]', 'Ensayo', 'required');
+		$this->form_validation->set_rules('cantidad[]', 'Ensayo', 'required');
 		
 					
 		if ($this->form_validation->run() == FALSE)
@@ -257,7 +260,6 @@ class Muestra extends CI_Controller {
 			$row[] = $hormigon->cli_nombre;
 			$row[] = $hormigon->obr_nombre;
 			$row[] = '<a href="'. base_url()."muestra/ficha/".$hormigon->mue_id.'/muestra">Ficha</a>';
-			$row[] = '<a href="'. base_url()."muestra/editar/".$hormigon->mue_id.'">editar</a>';
 			$row[] = '<a onclick="return confirmar()" href="'. base_url()."muestra/eliminar/".$hormigon->mue_id.'">Eliminar</a>';
 			$data[] = $row;
 		}
@@ -315,17 +317,66 @@ class Muestra extends CI_Controller {
 		}
 
 		
+$this->load->library('Pdf');
+        $pdf = new Pdf('P', 'mm', 'letter', true, 'UTF-8', false);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Concremag');
+        $pdf->SetTitle('registro de ensaye');
+        $pdf->SetSubject('registro de ensaye');
+        $pdf->setFontSubsetting(true);
+    	$pdf->SetFont('Helvetica', '', 8, '', true);
+ 	
 
-		
+ 	// remove default header/footer
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
+
+
+	
+ 	
+		$html="";
+
 if(isset($cilindro_compresion))
-		$this->tabla($cilindro_compresion,'cilindro');
-if(isset($cilindro_hendimiento))
-	$this->tabla($cilindro_hendimiento,'hendimiento');
-if(isset($cubo_compresion))
-		$this->tabla($cubo_compresion,'cubo');
-if(isset($prisma_flexotraccion))
-		$this->tabla($prisma_flexotraccion,'flexo');
+		{
+				$pdf->AddPage();
+				$html = $this->tabla($cilindro_compresion,'cilindro');
+				  $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+ 
 		
+		}
+if(isset($cilindro_hendimiento))
+	    {
+	    		$pdf->AddPage();
+	    		$html = $this->tabla($cilindro_hendimiento,'hendimiento');
+	    		  $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+ 
+		   
+	    }
+if(isset($cubo_compresion))
+		{
+				$pdf->AddPage();
+				$html = $this->tabla($cubo_compresion,'cubo');
+				  $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+ 
+		   
+	    }
+if(isset($prisma_flexotraccion))
+		{	
+			$pdf->AddPage();
+		    $html = $this->tabla($prisma_flexotraccion,'flexo');
+		      $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+ 
+		}
+
+
+// Imprimimos el texto con writeHTMLCell()
+    
+      
+// ---------------------------------------------------------
+// Cerrar el documento PDF y preparamos la salida
+// Este método tiene varias opciones, consulte la documentación para más información.
+        $nombre_archivo = utf8_decode("registro de ensaye.pdf");
+        $pdf->Output($nombre_archivo, 'I');
 		
 	}
 
@@ -336,8 +387,9 @@ if(isset($prisma_flexotraccion))
 public function tabla($ensayo,$E)
 {
 
+$html="";
+$j=count($ensayo)/6; //cantidad de hojas
 
-$j=count($ensayo)/6;
 $x=0;
 $i=count($ensayo);
 if($i>0)
@@ -345,7 +397,8 @@ if($i>0)
 
 			while($j>0 )
 			{
-				for ($i; $i <6 ; $i++) { 
+
+				for ($i; $i <(6*ceil($j)) ; $i++) { 
 					if(!isset($ensayo[$x+$i]['edad']))
 					{
 					    $ensayo[$x+$i]['mue_id']="";
@@ -356,37 +409,15 @@ if($i>0)
 					}
 				}
 			
-					
-							print '
+					$html .= '
 							
-							 
-							  <page>
-							  
-							<style type="text/css" >
-					<!--
-					.Estilo4 {
-						font-family: Arial, Helvetica, sans-serif;
-						font-size: 10px;
-					}
-					.Estilo20 {
-						font-family: Arial, Helvetica, sans-serif;
-						font-size: 14px;
-						font-weight: bold;
-					}
-					.Estilo21 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; }
-					.Estilo34 {font-size: 12px}
-					.Estilo36 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: 00000; }
-					.Estilo37 {color: 00000}
-					.Estilo38 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: 00000; font-weight: bold; }
-					-->
-					</style>
 					
-							  <table>
-								<tr>
-								  <td width="135"  height="76"><img src="'.base_url().'assets/img/vilicic.png" width="115" height="27" /></td>
-									<td  width="310">&nbsp;</td>
-									<td  width="204">
-											<table width="210" border="1" cellspacing="0" cellpadding="0">
+							  <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+												<tr>
+								  <td><img src="'.base_url().'assets/img/vilicic.png" width="115" height="27" /></td>
+									<td >&nbsp;</td>
+									<td >
+											<table border="1" cellspacing="0" cellpadding="0">
 													 <tr>
 														   <th scope="col"><span class="Estilo34">L-CV-FREH-01 Versión: 04</span></th>
 													 </tr>
@@ -395,98 +426,100 @@ if($i>0)
 								</tr>
 							  </table>
 							
-							  <table border="1" cellpadding="0" cellspacing="0"  bordercolor="#000000">
-									  <tr bordercolor="#ffffff"  class="Estilo21">
-										  <TD></TD>
-										  <td colspan="3">REGISTRO DE ENSAYE PARA MUESTRAS DE HORMIG&Oacute;N </td>
-									   </tr>
-									   <TR bordercolor="#ffffff"  class="Estilo21">
-											<TD></TD>
-											<TD >INFORMACI&Oacute;N GENERAL </TD>
-										</TR>
-										<tr bordercolor="#ffffff">
-										  <td  width="196" height="39" class="Estilo4">Obra</td>
-										  <td  width="415">: '.'obra'.'</td>
-										</tr>
+							  <table  width="100%" border="0" cellpadding="2" cellspacing="0"  bordercolor="#000000">
+									  <tr><td style="text-align:center">REGISTRO DE ENSAYE PARA MUESTRAS DE HORMIG&Oacute;N </td></tr>
+									  <tr><td style="text-align:center">INFORMACI&Oacute;N GENERAL</td></tr>
 							  </table>
-							  
-								<br>
-								<table width="591" cellpadding="0" cellspacing="0"  bordercolor="#000000" >
-								  <tr>
-									<td colspan="8"  class="Estilo21" style="text-align: center">IDENTIFICACI&Oacute;N DE LA MUESTRA </td>
+
+
+							  <table width="100%" border="1" cellpadding="2" cellspacing="0"  bordercolor="#000000">
+									  <tr><td>Obra : </td></tr>
+							  </table>
+<br><br>
+							   <table width="100%" border="1" cellpadding="2" cellspacing="0">
+									<tr>
+									<td  colspan="7" style="text-align: center">IDENTIFICACI&Oacute;N DE LA MUESTRA </td>
 								  </tr>
-								  <tr bordercolor="#00000">
-									<td border="1" width="151" height="16"><span class="Estilo36">Muestra N&deg; </span></td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+0]['mue_id'].'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+1]['mue_id'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+2]['mue_id'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+3]['mue_id'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+4]['mue_id'] .'</td>
-									<td border="1" width="70" style="text-align: center" class="Estilo38">' . $ensayo[$x+5]['mue_id'] .'</td>
+
+								   <tr>
+									<td border="1" width="22%" height="16"><span >Muestra N&deg; </span></td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+0]['mue_id'].'</td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+1]['mue_id'] .'</td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+2]['mue_id'] .'</td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+3]['mue_id'] .'</td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+4]['mue_id'] .'</td>
+									<td border="1" width="13%" style="text-align: center" >' . $ensayo[$x+5]['mue_id'] .'</td>
 								  </tr>
-								  <tr bordercolor="#00000">
-									<td border="1" height="16"><span class="Estilo36">Fecha de Confecci&oacute;n </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_edad'] .'</td>
+
+								   <tr bordercolor="#00000">
+									<td border="1" height="16"><span >Fecha de Confecci&oacute;n </span></td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+0]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+1]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+2]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+3]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+4]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+5]['ens_edad'] .'</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="16"><span class="Estilo36">Tipo de Probeta </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_tipo_probeta'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['ens_tipo_probeta'] .'</td>
+								  <tr >
+									<td border="1" height="16"><span >Tipo de Probeta </span></td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+0]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+1]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+2]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+3]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+4]['ens_tipo_probeta'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+5]['ens_tipo_probeta'] .'</td>
 								  </tr>
 								  <tr bordercolor="#000000">
-									<td border="1" height="16"><span class="Estilo36">Ensaye</span></td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['ens_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['ens_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['ens_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['ens_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['ens_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_ensaye'] .'</td>
+									<td border="1" height="16"><span >Ensaye</span></td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+0]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+1]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+2]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+3]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+4]['ens_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+5]['ens_ensaye'] .'</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="16" class="Estilo36">Fecha de ensaye </td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+0]['ens_fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+1]['ens_fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+2]['ens_fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+3]['ens_fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+4]['ens_fecha_ensaye'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">'.  $ensayo[$x+5]['ens_fecha_ensaye'] .'</td>
+								  <tr >
+									<td border="1" height="16" >Fecha de ensaye </td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+0]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+1]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+2]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+3]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+4]['ens_fecha_ensaye'] .'</td>
+									<td border="1" style="text-align: center" >'.  $ensayo[$x+5]['ens_fecha_ensaye'] .'</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="16"><span class="Estilo36">Edad (días) </span></td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+0]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+1]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+2]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+3]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+4]['ens_edad'] .'</td>
-									<td border="1" style="text-align: center" class="Estilo36">' . $ensayo[$x+5]['ens_edad'] .'</td>
+								  <tr >
+									<td border="1" height="16"><span >Edad (días) </span></td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+0]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+1]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+2]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+3]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+4]['ens_edad'] .'</td>
+									<td border="1" style="text-align: center" >' . $ensayo[$x+5]['ens_edad'] .'</td>
 								  </tr>
-								  <tr bordercolor="#FFFFFFF">
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td width="2">&nbsp;</td>
-								  </tr>
-								  <tr>
-									<td colspan="8"  class="Estilo21" style="text-align: center">DATOS DE ENSAYO</td>
-								  </tr>';
+							  </table> 
+
+								';
 								  
 								  
 	if($E=="cubo"){
-		print '
-								  <tr bordercolor="#0000000">
-									<td border="1" height="25"><span class="Estilo36">Procedimiento de Curado</span></td>
+		$html .= '<br><br>
+		                			<table width="100%" border="1" cellpadding="3" cellspacing="0">
+									<tr>
+									<td colspan="7" style="text-align: center">DATOS DE ENSAYO </td>
+									
+
+								  </tr>
+								  <tr >
+									<td width="22%" border="1" height="25"><span >Procedimiento de Curado</span></td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+								  </tr>
+								  <tr >
+									<td border="1" height="18"><span >Altura (h1) (mm) </span></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -494,8 +527,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18"><span class="Estilo36">Altura (h1) (mm) </span></td>
+								  <tr >
+									<td border="1" height="18" >Altura (h2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -503,8 +536,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Altura (h2) (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Altura Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -512,8 +545,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo38">Altura Promedio (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Ancho (b1) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -521,8 +554,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Ancho (b1) (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Ancho (b2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -530,8 +563,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Ancho (b2) (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Ancho Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -539,8 +572,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo38">Ancho Promedio (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Secci&oacute;n (mm2) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -548,8 +581,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Secci&oacute;n (mm2) </td>
+								  <tr >
+									<td border="1" height="18" >Volumen (cm3) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -557,8 +590,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Volumen (cm3) </td>
+								  <tr >
+									<td border="1" height="18" >Masa (g) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -566,24 +599,7 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Masa (g) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								   <tr bordercolor="#FFFFFFF">
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td width="2">&nbsp;</td>
-								  </tr>
+								 </table>
 								  ';
 								  
 								  
@@ -591,9 +607,20 @@ if($i>0)
 	
 	
 	if($E=="flexo"){
-		print '
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20"><span class="Estilo36">Procedimiento de Curado</span></td>
+		$html .= '<br><br>
+		                			<table width="100%" border="1" cellpadding="3" cellspacing="0">
+									<tr><td colspan="7" style="text-align: center">DATOS DE ENSAYO </td></tr>
+								  <tr >
+									<td width="22%" border="1" height="20"><span >Procedimiento de Curado</span></td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+								  </tr>
+								  <tr >
+									<td border="1" height="20"><span >Altura (h1) (mm) </span></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -601,8 +628,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20"><span class="Estilo36">Altura (h1) (mm) </span></td>
+								  <tr >
+									<td border="1" height="20" >Altura (h2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -610,8 +637,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Altura (h2) (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Altura Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -619,8 +646,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo38">Altura Promedio (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Ancho (b1) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -628,8 +655,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Ancho (b1) (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Ancho (b2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -637,17 +664,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Ancho (b2) (mm) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo38">Ancho Promedio (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Ancho Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -656,8 +674,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 								  </tr>
 								 
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Largo Probeta </td>
+								  <tr >
+									<td border="1" height="20" >Largo Probeta </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -665,8 +683,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								   <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Luz de Ensayo (mm)</td>
+								   <tr >
+									<td border="1" height="20" >Luz de Ensayo (mm)</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -674,8 +692,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Secci&oacute;n (mm2)  </td>
+								  <tr >
+									<td border="1" height="20" >Secci&oacute;n (mm2)  </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -683,8 +701,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Volumen (cm3) </td>
+								  <tr >
+									<td border="1" height="20" >Volumen (cm3) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -692,8 +710,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Masa (g) </td>
+								  <tr >
+									<td border="1" height="20" >Masa (g) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -701,15 +719,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								   <tr bordercolor="#FFFFFFF">
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td width="2">&nbsp;</td>
-								  </tr>
+								  
+								  </table>
 								  ';
 								  
 								  
@@ -717,9 +728,24 @@ if($i>0)
 	
 	
 	if($E=="hendimiento"){
-		print '
-								  <tr bordercolor="#0000000">
-									<td border="1" height="25"><span class="Estilo36">Procedimiento de Curado</span></td>
+		$html .= '<br><br>
+		                			<table width="100%" border="1" cellpadding="3" cellspacing="0">
+									<tr>
+									<td colspan="7" style="text-align: center">DATOS DE ENSAYO </td>
+									
+
+								  </tr>
+								  <tr >
+									<td width="22%" border="1" height="25"><span >Procedimiento de Curado</span></td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+								  </tr>
+								  <tr >
+									<td border="1" height="20"><span >Altura (h1) (mm) </span></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -727,8 +753,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20"><span class="Estilo36">Altura (h1) (mm) </span></td>
+								  <tr >
+									<td border="1" height="20" >Altura (h2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -736,17 +762,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Altura (h2) (mm) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo38">Altura Promedio (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Altura Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -755,8 +772,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 								  </tr>
 								 
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Diametro (d1) (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Diametro (d1) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -764,8 +781,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Diametro (d2) (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Diametro (d2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -773,8 +790,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Diametro (d3) (mm) </td>
+								  <tr >
+									<td border="1" height="20" >Diametro (d3) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -782,8 +799,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36"><strong>Diametro Promedio (cm) </strong></td>
+								  <tr >
+									<td border="1" height="20" ><strong>Diametro Promedio (cm) </strong></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -793,8 +810,8 @@ if($i>0)
 								  </tr>
 								 
 							
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Secci&oacute;n (mm2)  </td>
+								  <tr >
+									<td border="1" height="20" >Secci&oacute;n (mm2)  </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -802,8 +819,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Volumen (cm3) </td>
+								  <tr >
+									<td border="1" height="20" >Volumen (cm3) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -811,8 +828,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Masa (g) </td>
+								  <tr >
+									<td border="1" height="20" >Masa (g) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -820,15 +837,7 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								   <tr bordercolor="#FFFFFFF">
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td width="2">&nbsp;</td>
-								  </tr>
+								  </table>
 								  ';
 								  
 								  
@@ -838,9 +847,24 @@ if($i>0)
 
 	
 	if($E=="cilindro"){
-		print '
-								  <tr bordercolor="#0000000">
-									<td border="1" height="25"><span class="Estilo36">Procedimiento de Curado</span></td>
+
+
+		                $html .= ' <br><br>
+		                			<table width="100%" border="1" cellpadding="3" cellspacing="0">
+									<tr>
+									<td colspan="7" style="text-align: center">DATOS DE ENSAYO </td>
+								  </tr>
+								  <tr >
+									<td width="22%" border="1" height="25"><span >Procedimiento de Curado</span></td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+								  </tr>
+								  <tr >
+									<td border="1" height="18"><span >Altura (h1) (mm) </span></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -848,8 +872,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18"><span class="Estilo36">Altura (h1) (mm) </span></td>
+								  <tr >
+									<td border="1" height="18" >Altura (h2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -857,36 +881,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Altura (h2) (mm) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo38">Altura Promedio (mm) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Diametro (d1) (mm) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Diametro (d2) (mm) </td>
+								  <tr >
+									<td border="1" height="18" >Altura Promedio (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -895,8 +891,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 								  </tr>
 								
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36"><strong>Diametro Promedio (cm) </strong></td>
+								  <tr >
+									<td border="1" height="18" >Diametro (d1) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -904,8 +900,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height=18" class="Estilo36">Secci&oacute;n (mm2)  </td>
+								  <tr >
+									<td border="1" height="18" >Diametro (d2) (mm) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -913,8 +909,9 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Volumen (cm3) </td>
+								
+								  <tr >
+									<td border="1" height="18" ><strong>Diametro Promedio (cm) </strong></td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -922,8 +919,9 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="18" class="Estilo36">Masa (g) </td>
+								  
+								  <tr >
+									<td border="1" height="18" >Seccion (mm2)  </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -931,15 +929,26 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								   <tr bordercolor="#FFFFFFF">
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td width="2">&nbsp;</td>
+
+								  <tr >
+									<td border="1" height="18" >Volumen (cm3) </td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
 								  </tr>
+								  <tr >
+									<td border="1" height="18" >Masa (g) </td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+								  </tr>
+								  </table>
 								  ';
 								  
 								  
@@ -947,12 +956,22 @@ if($i>0)
 	
 	if($E=="cilindro"){
 	
-	print '<tr>
-									<td colspan="8"  class="Estilo21" style="text-align: center">RESULTADO DE ENSAYO </td>
+	$html .= '<br><br><table width="100%"  border="1" cellpadding="3" cellspacing="0">
+									<tr>
+									<td colspan="7"   style="text-align: center">RESULTADO DE ENSAYO </td>
 								  </tr>
 								
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Densidad (kg/m3) </td>
+								  <tr >
+									<td width="22%" border="1" height="20" >Densidad (kg/m3) </td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+								  </tr>
+								 <tr >
+									<td border="1" height="20" >Carga M&aacute;xima (Kn) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -960,8 +979,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								 <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga M&aacute;xima (Kn) </td>
+								 <tr >
+									<td border="1" height="20" >Carga Corregida (Kn) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -969,17 +988,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								 <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga Corregida (Kn) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								  	 <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga M&aacute;xima(N) </td>
+								  	 <tr >
+									<td border="1" height="20" >Carga M&aacute;xima(N) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -989,8 +999,8 @@ if($i>0)
 								  </tr>
 								 
 
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Resistencia Cilindrica (kg/cm2) </td>
+								  <tr >
+									<td border="1" height="20" >Resistencia Cilindrica (kg/cm2) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -998,8 +1008,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Resistencia Cilindrica (MPa) </td>
+								  <tr >
+									<td border="1" height="20" >Resistencia Cilindrica (MPa) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1007,8 +1017,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36"><p></p></td>
+								  <tr >
+									<td border="1" height="20" >Resistencia Cubica (kg/cm2) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1016,29 +1026,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Resistencia Cubica (MPa)</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-
-
-<tr bordercolor="#0000000">
-									<td border="1" height="25" class="Estilo36">Defectos Externos</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-
-<tr bordercolor="#0000000">
-									<td border="1" height="25" class="Estilo36">Obs. Despues Rotura</td>
+								  <tr >
+									<td border="1" height="20" >Resistencia Cubica (MPa)</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1048,15 +1037,37 @@ if($i>0)
 								  </tr>
 
 
-								  <tr><td class="Estilo38">OBSERVACIONES:</td></tr>
+<tr >
+									<td border="1" height="25" >Defectos Externos</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+								  </tr>
+
+<tr >
+									<td border="1" height="25" >Obs. Despues Rotura</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+								  </tr>
+
+
+							
 								</table>
 								
-<br><br><br><br><br>
+<br><br>OBSERVACIONES:<br><br><br><br>
+<br><br><br><br>
 								<table border="0" >
 								<tr><td style="text-align: center" width="300">___________________________</td><td style="text-align: center" width="300">________________________</td></tr>
 								<tr><td style="text-align: center" >Laboratorista Responsable Ensayo</td><td style="text-align: center">Jefe Laboratorio Obra</td></tr>
 								</table>
-																</page> ';
+																 ';
 							
 								$j=$j-1;
 								$x=6;
@@ -1065,29 +1076,21 @@ if($i>0)
 						{
 
 
-	print '<tr>
-									<td colspan="8"  class="Estilo21" style="text-align: center">RESULTADO DE ENSAYO </td>
+	$html .= '<br><br><table width="100%"  border="1" cellpadding="3" cellspacing="0">
+	          <tr>
+									<td colspan="7"   style="text-align: center">RESULTADO DE ENSAYO </td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Densidad (kg/m3) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
+								  <tr >
+									<td width="22%" border="1" height="20" >Densidad (kg/m3) </td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
+									<td width="13%" border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga M&aacute;xima (kN) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-								 <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga Corregida (kN) </td>
+								  <tr >
+									<td border="1" height="20" >Carga M&aacute;xima (kN) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1095,8 +1098,17 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Carga M&aacute;xima (N) </td>
+								 <tr >
+									<td border="1" height="20" >Carga Corregida (kN) </td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+								  </tr>
+								  <tr >
+									<td border="1" height="20" >Carga M&aacute;xima (N) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1106,8 +1118,8 @@ if($i>0)
 								  </tr>
 								 								 
 
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36"><p></p></td>
+								  <tr >
+									<td border="1" height="20" >Resistencia Cilindrica (kg/cm2) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1115,19 +1127,8 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr bordercolor="#0000000">
-									<td border="1" height="20" class="Estilo36">Resistencia (MPa) </td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-									<td border="1">&nbsp;</td>
-								  </tr>
-
-
-<tr bordercolor="#0000000">
-									<td border="1" height="25" class="Estilo36">Defectos Externos</td>
+								  <tr >
+									<td border="1" height="20" >Resistencia (MPa) </td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1136,8 +1137,9 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 								  </tr>
 
-<tr bordercolor="#0000000">
-									<td border="1" height="25" class="Estilo36">Obs. Despues Rotura</td>
+
+<tr >
+									<td border="1" height="25" >Defectos Externos</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
@@ -1145,9 +1147,20 @@ if($i>0)
 									<td border="1">&nbsp;</td>
 									<td border="1">&nbsp;</td>
 								  </tr>
-								  <tr><td class="Estilo38">OBSERVACIONES:</td></tr>
+
+<tr >
+									<td border="1" height="25" >Obs. Despues Rotura</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+									<td border="1">&nbsp;</td>
+								  </tr>
+								  
 								</table>
-								<br><br><br><br><br>
+
+								<br>OBSERVACIONES:<br><br><br><br>
 							<table border="0" >
 								<tr><td style="text-align: center" width="300">___________________________</td><td style="text-align: center" width="300">________________________</td></tr>
 								<tr><td style="text-align: center" >Laboratorista Responsable Ensayo</td>
@@ -1155,7 +1168,7 @@ if($i>0)
 								</table>
 									              
 
-								</page> ';
+							';
 							
 								$j=$j-1;
 								$x=6;
@@ -1163,6 +1176,7 @@ if($i>0)
 						}
 					}
 			}
+			return $html;
 }  
 
 }
