@@ -27,6 +27,29 @@ class ensayo_model extends CI_Model {
 	}
 
 
+
+
+	public function get_informe_ensayo($id_obra)
+	{
+			$this->db->select('ensayos.*,muestras.*');
+			$this->db->from('ensayos');
+			$this->db->join('muestras', 'ensayos.mue_id = muestras.mue_id');
+			$this->db->join('obras', 'muestras.obr_id = obras.obr_id');
+			$this->db->where('obras.obr_id',$id_obra);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
+
+
+	public function del_ensayo($id)
+	{
+		$this->db->where('ens_id', $id);
+		return $this->db->delete('ensayos');
+	}
+
+
 public function get_ensayo_muestra($id)
 	{
 		$this->db->select('*');
@@ -83,6 +106,7 @@ public function get_ensayo_muestra($id)
 				'ens_resistencia_cilindrica_mpa' => $this->input->post('ResistenciaCilindricaMPA'),
 				'ens_resistencia_cilindrica_kgc2' => $this->input->post('ResistenciaCilindricaKGc2'),
 				'ens_carga_corregida' => $this->input->post('carga_corregida'),
+				'ens_luz' => $this->input->post('ens_luz'),
 				'cal_id' => $this->input->post('cal_id')
 			);
 

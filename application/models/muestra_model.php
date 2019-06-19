@@ -84,6 +84,7 @@ class muestra_model extends CI_Model {
 				'cam_id' => $cam_id,
 				'hor_id' => $hor_id,
 				'mue_observaciones' => $this->input->post('observaciones'),
+			
 				'adi_id' => $adi_id,
 				'cem_id' => $cem_id
 			);
@@ -92,36 +93,51 @@ class muestra_model extends CI_Model {
 	}	
 	public function edit_muestra($id)
 	{
-		$data = array('mue_id' => $this->input->post('mue_id'),
-				'obr_id' => $this->input->post('obr_id'),
-				'mue_ubicacion' => $this->input->post('ubicacion'),
-				'mue_num_muestra' => $this->input->post('num_muestra'),
-				'mue_fecha_muestreo' => $this->input->post('fecha_muestreo'),	
-				'mue_elemen_hormi' => $this->input->post('elemen_hormi'),
-				'mue_guia' => $this->input->post('guia'),
-				'mue_h_planta' => $this->input->post('h_planta'),
-				'mue_t_ambiente' => $this->input->post('t_ambiente'),
-				'mue_num_camion' => $this->input->post('num_camion'),
-				'mue_h_obra' => $this->input->post('h_obra'),
-				'mue_planta_num' => $this->input->post('planta_num'),
-				'mue_cntm3' => $this->input->post('cntm3'),
-				'mue_h_descarga' => $this->input->post('h_descarga'),
-				'mue_t_hormigon' => $this->input->post('t_hormigon'),
-				'mue_aire' => $this->input->post('aire'),
-				'mue_h_muestreo' => $this->input->post('h_muestreo'),
-				'mue_asentamiento' => $this->input->post('asentamiento'),
-				'mue_aditivos' => $this->input->post('aditivos'),
-				'mue_compactacion' => $this->input->post('compactacion'),
-				'mue_camion' => $this->input->post('camion'),
-				'mue_fec_ingreo' => $this->input->post('fec_ingreo'),
-				'mue_login' => $this->input->post('login'),
-				'mue_hormigon_grado' => $this->input->post('hormigon_grado'),
-				'mue_fecha_ingreso_lab' => $this->input->post('fecha_ingreso_lab'),
-				'mue_observaciones' => $this->input->post('observaciones'),
-				'cem_id' => $this->input->post('cem_id')
+
+			$pla_id=$this->input->post('pla_id');
+			$adi_id=$this->input->post('adi_id');
+			$cam_id=$this->input->post('cam_id');
+			$hor_id=$this->input->post('hor_id');
+			$cem_id=$this->input->post('cem_id');
+
+			if($pla_id=='')
+				$pla_id = null;
+            if($adi_id=='')
+				$adi_id = null;
+			if($cam_id =='')
+				$cam_id = null;
+			if($hor_id=='')
+				$hor_id = null;
+			if($cem_id=='')
+				$cem_id = null;
+
+			$data = array(
+				'mue_ubicacion' => $this->input->post('mue_ubicacion'),
+				'mue_n_muestra' => $this->input->post('mue_n_muestra'),
+				'mue_fecha_ingreso_lab' => $this->input->post('mue_fecha_ingreso_lab'),	
+				'mue_elemento_hormigonado' => $this->input->post('mue_elemento_hormigonado'),
+				'mue_guia' => $this->input->post('mue_guia'),
+				'mue_hora_planta' => $this->input->post('mue_hora_planta'),
+				'mue_temperatura_ambiente' => $this->input->post('mue_temperatura_ambiente'),
+				'mue_numero_camion' => $this->input->post('mue_numero_camion'),
+				'mue_hora_obra' => $this->input->post('mue_hora_obra'),
+				'mue_cntm3' => $this->input->post('mue_cntm3'),
+				'mue_hora_descarga' => $this->input->post('mue_hora_descarga'),
+				'mue_temperatura_hormigon' => $this->input->post('mue_temperatura_hormigon'),
+				'mue_aire' => $this->input->post('mue_aire'),
+				'mue_hora_muestreo' => $this->input->post('mue_hora_muestreo'),
+				'mue_asentamiento_cono' => $this->input->post('mue_asentamiento_cono'),
+				'mue_compactacion' => $this->input->post('mue_compactacion'),
+				'cam_id' => $cam_id,
+				'hor_id' => $hor_id,
+				'mue_observaciones' => $this->input->post('mue_observaciones'),
+				'adi_id' => $adi_id,
+				'pla_id' => $pla_id,
+				'cem_id' => $cem_id
 			);
+			
 			$this->db->where('mue_id', $id);
-		return $this->db->update('MUESTRAS', $data);
+		return $this->db->update('muestras', $data);
 	}
 
 

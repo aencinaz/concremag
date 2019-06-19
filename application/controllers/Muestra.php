@@ -44,13 +44,45 @@ class Muestra extends CI_Controller {
 	}
 
 
-	public function ficha($id,$muestra)
+	public function ficha($id,$muestra,$mensaje=FALSE)
 	{
 
+			if($mensaje == "error")
+			$mensaje = array('mensaje' =>  'No se pudo completar la operación.',
+							 'class' =>  	'danger',
+				             'strong' =>  	'Error!'
+			 );
+
+		if($mensaje == "success")
+			$mensaje = array('mensaje' =>  'Registros Actualizados.',
+							 'class' => 	'success',
+				             'strong' =>  	'Aceptado!'
+			 );
+
+
+
+		$data['mensaje']=$mensaje;
+
+
+	$this->load->library('form_validation');
+	
 		$this->load->helper('url');
 		$this->load->model('muestra_model');
 		$this->load->model('ensayo_model');
 		
+		$this->load->model('hormigon_model');
+		$this->load->model('planta_model');
+		$this->load->model('cemento_model');
+		$this->load->model('camion_model');
+		$this->load->model('aditivo_model');
+
+		$data['hormigones']=$this->hormigon_model->get_hormigon();	
+		$data['plantas']=$this->planta_model->get_planta();	
+		$data['cementos']=$this->cemento_model->get_cemento();	
+		$data['camiones']=$this->camion_model->get_camion();	
+		$data['aditivos']=$this->aditivo_model->get_aditivo();	
+			
+
 		
 		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
@@ -128,19 +160,15 @@ class Muestra extends CI_Controller {
 
 	public function editar($id)
 	{
-		
-		$this->load->helper('url');
-		$this->load->helper('url_helper');
-
-		$this->load->model('muestra_model');
-		$data['id']=$id;
-		$data['selected']="Muestras";
-		$data['link_selected']="Listado";
-		$data['muestra']=$this->muestra_model->get_muestra($id);	
-		$this->load->view('header',$data);
-		$this->load->view('hormigon\editar',$data);
-		$this->load->view('essential_js');
-		$this->load->view('footer');
+	$this->load->helper('url');
+	$this->load->helper('url_helper');
+	$this->load->library('form_validation');	
+	$this->load->model('muestra_model');
+	
+	if($this->muestra_model->edit_muestra($id))
+			 	redirect(base_url().'muestra/ficha/'.$id.'/muestra/success', 'location');	
+		else
+			 	redirect(base_url().'muestra/ficha/'.$id.'/muestra/error', 'location');
 	}
 
 
@@ -241,6 +269,52 @@ class Muestra extends CI_Controller {
 		}
 	}
 
+public function ensayo_nuevo($id_muestra){
+
+		$this->load->model('ensayo_model');
+		$this->load->helper('url');
+		$this->load->library('form_validation');
+		$this->load->helper('url_helper');
+		$this->load->helper('date');
+	
+
+		    $id_muestra=$id_muestra;
+			$fecha_muestra		= $this->input->post('fecha_muestreo');
+			
+				$ensayo 			= $this->input->post('ensayo');
+				$edad 				= $this->input->post('edad');
+				$fecha_ensaye = new DateTime($fecha_muestra);
+				$fecha_ensaye->add(new DateInterval('P'.$edad.'D'));
+				$tipo_probeta="";
+				$ensaye="";
+			
+				switch ($ensayo) {
+					case 1:
+						$tipo_probeta="Cilindro";
+						$ensaye="Compresión";
+						break;
+					case 2:
+						$tipo_probeta="Cilindro";
+						$ensaye="Hendimiento";
+						break;
+					case 3:
+						$tipo_probeta="Cubo";
+						$ensaye="Compresión";
+						break;
+					case 4:
+						$tipo_probeta="Prisma";
+						$ensaye="Flexotracción";
+						break;
+					}
+
+		if($this->ensayo_model->set_ensayo($id_muestra,$tipo_probeta,$ensaye,$fecha_ensaye->format('Y-m-d'),$edad))
+			 	redirect(base_url()."muestra/ficha/".$id_muestra."/ensayo/success", 'location');	
+		else
+			 	redirect(base_url()."muestra/ficha/".$id_muestra."/ensayo/error", 'location');
+		
+
+				
+}
 
 	public function ajax_list()
 	{
@@ -291,6 +365,24 @@ class Muestra extends CI_Controller {
 			 	redirect(base_url().'/muestra/listar/error', 'location');
 
 	}
+
+
+
+	public function ensayo_eliminar($id_ensayo,$id_muestra)
+	{
+		$this->load->helper('url');
+		$this->load->library('form_validation');
+		$this->load->helper('url_helper');
+		$this->load->model('ensayo_model');
+
+		
+		if($this->ensayo_model->del_ensayo($id_ensayo))
+			 	redirect(base_url()."muestra/ficha/".$id_muestra."/ensayo/success", 'location');	
+		else
+			 	redirect(base_url()."muestra/ficha/".$id_muestra."/ensayo/error", 'location');
+	
+	}
+
 
 	public function formulario($id)
 	{
@@ -371,7 +463,7 @@ if(isset($prisma_flexotraccion))
 
 // Imprimimos el texto con writeHTMLCell()
     
-      
+    
 // ---------------------------------------------------------
 // Cerrar el documento PDF y preparamos la salida
 // Este método tiene varias opciones, consulte la documentación para más información.

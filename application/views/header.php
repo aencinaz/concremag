@@ -40,6 +40,9 @@
 
         <li class="treeview"><a class="app-menu__item <?php if($selected=="Informes") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-archive fa-lg"></i><span class="app-menu__label">Informes</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu ">
+            <li><a class="treeview-item" href="<?php echo base_url();?>informes/resistencias"><i class="icon fa fa-circle-o"></i> Resistencias</a></li>
+            <li><a class="treeview-item" href="<?php echo base_url();?>informes/ensayos"><i class="icon fa fa-circle-o"></i> Ensayos</a></li>
+            <li><a class="treeview-item" href="<?php echo base_url();?>informes/listado_general"><i class="icon fa fa-circle-o"></i> Listado General</a></li>
             <li><a class="treeview-item" href="<?php echo base_url();?>informes/evaluaciones"><i class="icon fa fa-circle-o"></i> Evaluación Estadística</a></li>
           
         </ul>
