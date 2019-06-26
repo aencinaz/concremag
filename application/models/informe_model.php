@@ -11,7 +11,6 @@ class informe_model extends CI_Model {
 			$this->db->join('calibraciones', 'calibraciones.cal_id = ensayos.cal_id', 'left');
 			$this->db->join('muestras', 'muestras.mue_id = ensayos.mue_id');
 			$this->db->where(array('obr_id' => $obr_id,'pla_id' => $pla_id,'ens_edad' => '90'));
-			$query = $this->db->get();
 			return $query->result_array();
 	}
 }

@@ -57,13 +57,13 @@
 <div class="form-group row">
   <label for="example-date-input" class="col-2 col-form-label">Fecha Desde</label>
   <div class="col-10">
-    <input class="form-control" type="date" value="" id="example-date-input">
+    <input class="form-control" type="date" name="fecha_inicio" value="" id="example-date-input">
   </div>
 </div>
 <div class="form-group row">
   <label for="example-date-input" class="col-2 col-form-label">Fecha Hasta</label>
   <div class="col-10">
-    <input name="fecha_hasta" class="form-control" type="date">
+    <input class="form-control" name="fecha_termino" type="date">
      <div class="form-control-feedback"> <?php echo form_error('fecha_hasta'); ?> </div>
   </div>
     
@@ -75,7 +75,7 @@
       <div class="col-sm-10">
         <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox"> Guardar informe
+            <input class="form-check-input" name="guardar" type="checkbox" value="true"> Guardar informe
           </label>
         </div>
       </div>

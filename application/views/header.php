@@ -48,7 +48,7 @@
         </ul>
       </li>
 
-      <l
+      
         <li class="treeview"><a class="app-menu__item <?php if($selected=="Administración") echo "active"?>" href="#" data-toggle="treeview">      <i class="app-menu__icon fa fa-cog fa-lg"></i><span class="app-menu__label">Administración</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu ">
             <li><a class="treeview-item" href="<?php echo base_url();?>aditivo/listar"><i class="icon fa fa-circle-o"></i> Aditivos</a></li>
@@ -60,7 +60,8 @@
             <li><a class="treeview-item" href="<?php echo base_url();?>planta/listar"><i class="icon fa fa-circle-o"></i> Plantas</a></li>
             <li><a class="treeview-item" href="<?php echo base_url();?>prensa/listar"><i class="icon fa fa-circle-o"></i> Prensas</a></li>
             <li><a class="treeview-item" href="<?php echo base_url();?>usuario/listar"><i class="icon fa fa-circle-o"></i> Usuarios</a></li>
-            
+            <li><a class="treeview-item" href="<?php echo base_url();?>informes/parametros"><i class="icon fa fa-circle-o"></i> Informes</a></li>
+                
           </ul>
         </li>
       </ul>

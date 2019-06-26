@@ -36,6 +36,8 @@ class ensayo_model extends CI_Model {
 			$this->db->join('muestras', 'ensayos.mue_id = muestras.mue_id');
 			$this->db->join('obras', 'muestras.obr_id = obras.obr_id');
 			$this->db->where('obras.obr_id',$id_obra);
+			$this->db->where(array("mue_fecha_muestreo >" => $this->input->post('fecha_inicio'),"mue_fecha_muestreo <" => $this->input->post('fecha_termino')));
+		
 		$query = $this->db->get();
 		return $query->result_array();
 	}

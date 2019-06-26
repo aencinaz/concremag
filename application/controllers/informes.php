@@ -30,6 +30,45 @@ class Muestra
 
 class Informes extends CI_Controller {
 
+
+
+	public function parametros($mensaje = FALSE)
+	{
+
+			if($mensaje == "error")
+			$mensaje = array('mensaje' =>  'No se pudo completar la operación.',
+							 'class' =>  	'danger',
+				             'strong' =>  	'Error!'
+			 );
+
+		if($mensaje == "success")
+			$mensaje = array('mensaje' =>  'Registros Actualizados.',
+							 'class' => 	'success',
+				             'strong' =>  	'Aceptado!'
+			 );
+
+
+
+		$data['mensaje']=$mensaje;
+
+		$this->load->helper('url');
+		$this->load->helper('url_helper');
+		
+		$this->load->model('parametro_model');
+		$this->load->library('form_validation');
+	
+		$data['selected']="administracion";
+		$data['link_selected']="informe";
+		$data['parametros']=$this->parametro_model->get_parametros();	
+		$this->load->view('header',$data);
+		$this->load->view('administracion\informe\parametros');
+		$this->load->view('essential_js');
+		$this->load->view('footer');
+	}
+
+
+
+
 	public function resistencias()
 	{
 
@@ -198,7 +237,7 @@ public function ensayos()
 	{
 
 
-$this->load->helper('url');
+		$this->load->helper('url');
 		$data['selected']="Muestras";
 		$data['link_selected']="Listado";
 
@@ -206,7 +245,7 @@ $this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->helper('url_helper');		
 		$this->form_validation->set_rules('obr_id', 'Obra', 'required');	
-		$this->form_validation->set_rules('fecha_hasta', 'Fecha', 'required');	
+		$this->form_validation->set_rules('fecha_termino', 'Fecha', 'required');	
 
 		if ($this->form_validation->run() == FALSE)
 		{	
@@ -224,18 +263,25 @@ $this->load->helper('url');
 	   	else
 	   	{
 
+		$this->load->model('cliente_model');
+		$this->load->model('obra_model');
+		$this->load->model('ensayo_model');
 
-$this->load->model('cliente_model');
-$this->load->model('obra_model');
-$this->load->model('ensayo_model');
-$cliente=$this->cliente_model->get_cliente($this->input->post('cli_id'));
-$obra=$this->obra_model->get_obra($this->input->post('obr_id'))	;
-$ensayos=$this->ensayo_model->get_informe_ensayo($this->input->post('obr_id'))	;
-
-
+		$cliente=$this->cliente_model->get_cliente($this->input->post('cli_id'));
+		$obra=$this->obra_model->get_obra($this->input->post('obr_id'))	;
+		$ensayos=$this->ensayo_model->get_informe_ensayo($this->input->post('obr_id'))	;
+		$fecha_min_de_muestras="";
+		$fecha_max_de_muestras="";
+		$numeros_de_muestras = array_unique(array_column($ensayos, 'mue_n_muestra'));
+		if(count($numeros_de_muestras)){
+			$fecha_max_de_muestras = date("d-m-Y",strtotime(max(array_column($ensayos, 'mue_fecha_muestreo'))));
+			$fecha_min_de_muestras = date("d-m-Y",strtotime(min(array_column($ensayos, 'mue_fecha_muestreo'))));
+		}
 
 /// informe ---------------------------------------------------------
-	$this->load->library('Pdf');
+	//
+
+		$this->load->library('Pdf');
         $pdf = new Pdf('P', 'mm', 'letter', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Concremag');
@@ -306,7 +352,21 @@ $html = '<html><head>
 		<tr>
 			<td width="20%">Registro Interno</td>
 			<td width="1%">:</td>
-			<td width="79%"></td>
+			<td width="79%">';
+
+ if($this->input->post('guardar'))
+        {
+        	$leer= fopen('D:\\xampp\\htdocs\\concremag\\assets\\informes\\indice.txt', 'r+');
+			$indice = fgets($leer);
+			fclose($leer);
+			$html.= $indice++;
+		}
+		else
+		{
+			$html.= "Informe de Prueba";
+		}
+
+			$html.='</td>
 			</tr>
 			<tr>
 				<td>Fecha de Emisi&oacute;n</td>
@@ -325,7 +385,11 @@ $html = '<html><head>
 			<tr>
 				<td width="20%"><span class="Estilo4">N&deg; de Muestras </span></td>
 				<td width="1%">:</td>
-				<td width="79%" class="Estilo4">
+				<td width="79%" class="Estilo4">';
+				foreach ($numeros_de_muestras as $key) {
+					$html .= $key ." / "; 
+				}
+				$html .= '
 			</td>
 		</tr>
 		<tr>
@@ -336,7 +400,7 @@ $html = '<html><head>
 		<tr>
 			<td>Periodo de Muestreo</td>
 			<td>:</td>
-			<td></td>
+			<td>'.$fecha_min_de_muestras ." / " . $fecha_max_de_muestras.'</td>
 			</tr>
 <tr>
 	<td>Procedimiento</td>
@@ -357,11 +421,11 @@ $html = '<html><head>
 		<td colspan="5" bgcolor="#FFCC33" style="text-align: center">DETALLE DE EQUIPOS UTILIZADOS </td>
 	</tr>
 	<tr>
-		<td width="20%">Descripci&oacute;n</td>
-		<td width="20%">Codigo</td>
-		<td width="20%">Certificado de Calibraci&oacute;n </td>
-		<td width="20%">Proxima Calibraci&oacute;n </td>
-		<td width="20%">Emitido</td>
+		<td style="text-align: center" width="15%">Descripci&oacute;n</td>
+		<td style="text-align: center" width="20%">Codigo</td>
+		<td style="text-align: center" width="25%">Certificado de Calibraci&oacute;n </td>
+		<td style="text-align: center" width="20%">Proxima Calibraci&oacute;n </td>
+		<td style="text-align: center" width="20%">Emitido</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -423,9 +487,6 @@ $html = '
 			</td>
 		</tr>
 		</table>
-
-
-
 			<table border="0" cellpadding="1">
 				<tr bgcolor="#FFCC33">
 					<th width="8%" style="text-align: center" > Muestra</th>
@@ -449,7 +510,6 @@ $html = '
         			{
         				$html .= '<tr><td colspan="9">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</td></tr>';
         			}
-
         			$rowspan=$this->count_array_valor($ensayos,$fila['mue_n_muestra']);
 		    		$html .= "<tr>";
 		            $html .= '<td rowspan="'.$rowspan.'" style="text-align: center" >'.$fila['mue_n_muestra']."</td>";
@@ -509,9 +569,20 @@ $html = '
 
 		$pdf->AddPage();
  		$pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
-        $nombre_archivo = utf8_decode("Informe Ensayo.pdf");
+        $nombre_archivo = utf8_decode("Informe Ensayo");
         $pdf->Output($nombre_archivo, 'I');
-
+       if($this->input->post('guardar'))
+        {
+        	$leer= fopen('D:\\xampp\\htdocs\\concremag\\assets\\informes\\indice.txt', 'r+');
+			$indice = fgets($leer);
+			fclose($leer);
+			$indice++;
+			$nombre_archivo = utf8_decode("D:\\xampp\\htdocs\\concremag\\assets\\informes\\".$indice.".pdf");
+        	$pdf->Output($nombre_archivo, 'F');
+        	$leer= fopen('D:\\xampp\\htdocs\\concremag\\assets\\informes\\indice.txt', 'w');
+			fwrite($leer, $indice);
+        	fclose($leer);
+		}
 // fin de informe ----------------------------------------------------
 
 
