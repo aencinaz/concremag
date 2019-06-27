@@ -67,6 +67,50 @@ class Informes extends CI_Controller {
 	}
 
 
+	public function set_formulario_ensaye($mensaje = FALSE)
+	{
+		$this->load->helper('url');
+		$this->load->helper('url_helper');
+		$this->load->model('parametro_model');
+		if($this->parametro_model->update_formulario_ensaye())
+				redirect(base_url()."informes/parametros/success", 'location');	
+		else
+			 	redirect(base_url()."informes/parametros/error", 'location');	
+	
+	
+	}
+
+		public function set_resistencia($mensaje = FALSE)
+	{
+		$this->load->helper('url');
+		$this->load->helper('url_helper');
+		$this->load->model('parametro_model');
+		if($this->parametro_model->update_resistencia())
+				redirect(base_url()."informes/parametros/success", 'location');	
+		else
+			 	redirect(base_url()."informes/parametros/error", 'location');	
+	
+	
+	}
+
+
+	public function set_ensayo($mensaje = FALSE)
+	{
+		$this->load->helper('url');
+		$this->load->helper('url_helper');
+		$this->load->model('parametro_model');
+		if($this->parametro_model->update_ensayo())
+				redirect(base_url()."informes/parametros/success", 'location');	
+		else
+			 	redirect(base_url()."informes/parametros/error", 'location');	
+	
+	
+	}
+
+
+
+
+
 
 
 	public function resistencias()
